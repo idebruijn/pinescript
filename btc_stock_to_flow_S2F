@@ -1,0 +1,222 @@
+//@version=4
+study("DIY: Bitcoin S2F(X)", overlay=true)
+
+// Inputs
+chk_s2f_line = input(true, title="Line", group="S2F")
+chk_s2f_band = input(true, title="Band", group="S2F")
+s2f_line_color = input(color.rgb(102, 187, 106, 25),  type=input.color, title="Line color", group="S2F")
+s2f_band_color = input(color.rgb(102, 187, 106, 90),  type=input.color, title="Band color", group="S2F")
+
+chk_s2fx_line = input(true, title="Line", group="S2FX")
+chk_s2fx_band = input(false, title="Band", group="S2FX")
+s2fx_line_color = input(color.rgb(38, 198, 218, 25),  type=input.color, title="Color", group="S2FX")
+s2fx_band_color = input(color.rgb(38, 198, 218, 90),  type=input.color, title="Band color", group="S2FX")
+
+chk_circle = input(true, title="Show", group="Months until next halving")
+circle_position = input(title="Display Position", defval="Price", options=["Price", "Specified Price"], group="Months until next halving")
+circle_price = input(1, type=input.integer, title="Position Specified Price", group="Months until next halving")
+circle_width = input(6, type=input.integer, minval=1, maxval=100, title="Width", group="Months until next halving")
+circle_opa = input(0, type=input.integer, minval=0, maxval=100, title="Opacity", group="Months until next halving")
+
+band_dev1 = input(0.62, type=input.float, minval=0, title="Dev 1", group="Band")
+band_dev2 = input(0.9424, type=input.float, minval=0, title="Dev 2", group="Band")
+
+
+// Circle Color
+get_color(val) =>
+    ret_col = color.rgb(255, 0, 0, circle_opa)
+    if val >= 49
+        ret_col := color.rgb(255, 0, 0, circle_opa)
+    else if val >= 48
+        ret_col := color.rgb(255, 21, 0, circle_opa)
+    else if val >= 47
+        ret_col := color.rgb(255, 43, 0, circle_opa)
+    else if val >= 46
+        ret_col := color.rgb(255, 64, 0, circle_opa)
+    else if val >= 45
+        ret_col := color.rgb(255, 85, 0, circle_opa)
+    else if val >= 44
+        ret_col := color.rgb(255, 102, 0, circle_opa)
+    else if val >= 43
+        ret_col := color.rgb(255, 123, 0, circle_opa)
+    else if val >= 42
+        ret_col := color.rgb(255, 145, 0, circle_opa)
+    else if val >= 41
+        ret_col := color.rgb(255, 166, 0, circle_opa)
+    else if val >= 40
+        ret_col := color.rgb(255, 187, 0, circle_opa)
+    else if val >= 39
+        ret_col := color.rgb(255, 208, 0, circle_opa)
+    else if val >= 38
+        ret_col := color.rgb(255, 230, 0, circle_opa)
+    else if val >= 37
+        ret_col := color.rgb(255, 251, 0, circle_opa)
+    else if val >= 36
+        ret_col := color.rgb(238, 255, 0, circle_opa)
+    else if val >= 35
+        ret_col := color.rgb(217, 255, 0, circle_opa)
+    else if val >= 34
+        ret_col := color.rgb(200, 255, 0, circle_opa)
+    else if val >= 33
+        ret_col := color.rgb(179, 255, 0, circle_opa)
+    else if val >= 32
+        ret_col := color.rgb(157, 255, 0, circle_opa)
+    else if val >= 31
+        ret_col := color.rgb(136, 255, 0, circle_opa)
+    else if val >= 30
+        ret_col := color.rgb(115, 255, 0, circle_opa)
+    else if val >= 29
+        ret_col := color.rgb(94, 255, 0, circle_opa)
+    else if val >= 28
+        ret_col := color.rgb(72, 255, 0, circle_opa)
+    else if val >= 27
+        ret_col := color.rgb(51, 255, 0, circle_opa)
+    else if val >= 26
+        ret_col := color.rgb(30, 255, 0, circle_opa)
+    else if val >= 25
+        ret_col := color.rgb(9, 255, 0, circle_opa)
+    else if val >= 24
+        ret_col := color.rgb(0, 255, 9, circle_opa)
+    else if val >= 23
+        ret_col := color.rgb(0, 255, 30, circle_opa)
+    else if val >= 22
+        ret_col := color.rgb(0, 255, 51, circle_opa)
+    else if val >= 21
+        ret_col := color.rgb(0, 255, 72, circle_opa)
+    else if val >= 20
+        ret_col := color.rgb(0, 255, 94, circle_opa)
+    else if val >= 19
+        ret_col := color.rgb(0, 255, 115, circle_opa)
+    else if val >= 18
+        ret_col := color.rgb(0, 255, 136, circle_opa)
+    else if val >= 17
+        ret_col := color.rgb(0, 255, 157, circle_opa)
+    else if val >= 16
+        ret_col := color.rgb(0, 255, 179, circle_opa)
+    else if val >= 15
+        ret_col := color.rgb(0, 255, 200, circle_opa)
+    else if val >= 14
+        ret_col := color.rgb(0, 255, 217, circle_opa)
+    else if val >= 13
+        ret_col := color.rgb(0, 255, 238, circle_opa)
+    else if val >= 12
+        ret_col := color.rgb(0, 251, 255, circle_opa)
+    else if val >= 11
+        ret_col := color.rgb(0, 230, 255, circle_opa)
+    else if val >= 10
+        ret_col := color.rgb(0, 208, 255, circle_opa)
+    else if val >= 9
+        ret_col := color.rgb(0, 187, 255, circle_opa)
+    else if val >= 8
+        ret_col := color.rgb(0, 166, 255, circle_opa)
+    else if val >= 7
+        ret_col := color.rgb(0, 145, 255, circle_opa)
+    else if val >= 6
+        ret_col := color.rgb(0, 123, 255, circle_opa)
+    else if val >= 5
+        ret_col := color.rgb(0, 102, 255, circle_opa)
+    else if val >= 4
+        ret_col := color.rgb(0, 85, 255, circle_opa)
+    else if val >= 3
+        ret_col := color.rgb(0, 64, 255, circle_opa)
+    else if val >= 2
+        ret_col := color.rgb(0, 43, 255, circle_opa)
+    else if val >= 1
+        ret_col := color.rgb(0, 21, 255, circle_opa)
+    else if val < 1
+        ret_col := color.rgb(0, 0, 255, circle_opa)
+    ret_col
+
+
+
+// Halving Dates
+HALVING_DATE_1 = timestamp(2012, 11, 28, 15, 24)
+HALVING_DATE_2 = timestamp(2016, 7, 9, 16, 46)
+HALVING_DATE_3 = timestamp(2020, 5, 11, 19, 23)
+
+// Halving Block Height for calculation
+HALVING_HEIGHT_1 = 211012
+HALVING_HEIGHT_2 = 421019
+HALVING_HEIGHT_3 = 631305
+
+
+// Sources
+btc_price = security("QUANDL:BCHAIN/MKPRU", "D", close)
+thash_rate = security("QUANDL:BCHAIN/HRATE", "D", close)
+
+
+// Functions
+get_blocks(thash_rate) =>
+    hash_rate = thash_rate * pow(10, 12)
+    block_time = close * pow(2, 32) / hash_rate
+    block_time_mins = block_time / 60
+    daily_blocks = 1440 / block_time_mins
+    total_blocks = int(cum(daily_blocks))
+    total_blocks
+
+total_blocks = security("QUANDL:BCHAIN/DIFF", "D", get_blocks(thash_rate))
+
+
+get_left_months() =>
+    left_blocks = 210000 - ((total_blocks - HALVING_HEIGHT_3) % 210000)
+    
+    if time < HALVING_DATE_1
+        left_blocks := HALVING_HEIGHT_1 - total_blocks
+    else if time < HALVING_DATE_2
+        left_blocks := HALVING_HEIGHT_2 - total_blocks
+    else if time < HALVING_DATE_3
+        left_blocks := HALVING_HEIGHT_3 - total_blocks
+
+    days_per_month = 365 / 12
+    left_days = left_blocks / 144
+    left_months = left_days / days_per_month
+    left_months
+
+left_months = get_left_months()
+
+
+get_flow() =>
+    flow = close[1] - close[2]
+    flow_ma = sma(flow, 463)
+    yearlyflow = flow_ma * 365
+    stocktoflow = (close[1] - 1000000) / yearlyflow
+    s2f = exp(-1.84) * pow(stocktoflow, 3.36)
+    s2fx = (exp(12.7598) * pow(stocktoflow, 4.1167)) / close[1]
+    [s2f, s2fx]
+
+[s2f, s2fx] = security("QUANDL:BCHAIN/TOTBC", "D", get_flow())
+
+
+get_band(val) =>
+    src = log(val)
+    dev = band_dev1
+    upper = exp(src + dev)
+    lower = exp(src - dev)
+    dev2 = dev + band_dev2
+    upper2 = exp(src + dev2)
+    lower2 = exp(src - dev2)
+    [upper, lower, upper2, lower2]
+
+[s2f_u, s2f_l, s2f_u2, s2f_l2] = get_band(s2f)
+[s2fx_u, s2fx_l, s2fx_u2, s2fx_l2] = get_band(s2fx)
+
+
+
+// Plots
+plot(chk_circle ? circle_position == "Price" ? btc_price : circle_price : na, style=plot.style_circles, color=get_color(left_months), linewidth=circle_width, title="Months until next halving")
+
+plot(chk_s2f_line ? s2f : na, style=plot.style_line, linewidth=2, offset=-1, title='S2F', color=s2f_line_color)
+s2f_u_line = plot(chk_s2f_band ? s2f_u : na, style=plot.style_line, linewidth=1, offset=-1, title='S2F Upper 1', color=color.rgb(102, 187, 106, 100))
+s2f_l_line = plot(chk_s2f_band ? s2f_l : na, style=plot.style_line, linewidth=1, offset=-1, title='S2F Lower 1', color=color.rgb(102, 187, 106, 100))
+s2f_u_line2 = plot(chk_s2f_band ? s2f_u2 : na, style=plot.style_line, linewidth=1, offset=-1, title='S2F Upper 2', color=color.rgb(102, 187, 106, 100))
+s2f_l_line2 = plot(chk_s2f_band ? s2f_l2 : na, style=plot.style_line, linewidth=1, offset=-1, title='S2F Lower 2', color=color.rgb(102, 187, 106, 100))
+fill(s2f_u_line, s2f_l_line, color=s2f_band_color, title="S2F band 1")
+fill(s2f_u_line2, s2f_l_line2, color=s2f_band_color, title="S2F band 2")
+
+plot(chk_s2fx_line ? s2fx : na, style=plot.style_line, linewidth=2, offset=-1, title='S2FX', color=s2fx_line_color)
+s2fx_u_line = plot(chk_s2fx_band ? s2fx_u : na, style=plot.style_line, linewidth=1, offset=-1, title='S2FX Upper 1', color=color.rgb(38, 198, 218, 100))
+s2fx_l_line = plot(chk_s2fx_band ? s2fx_l : na, style=plot.style_line, linewidth=1, offset=-1, title='S2FX Lower 1', color=color.rgb(38, 198, 218, 100))
+s2fx_u_line2 = plot(chk_s2fx_band ? s2fx_u2 : na, style=plot.style_line, linewidth=1, offset=-1, title='S2FX Upper 2', color=color.rgb(38, 198, 218, 100))
+s2fx_l_line2 = plot(chk_s2fx_band ? s2fx_l2 : na, style=plot.style_line, linewidth=1, offset=-1, title='S2FX Lower 2', color=color.rgb(38, 198, 218, 100))
+fill(s2fx_u_line, s2fx_l_line, color=s2fx_band_color, title="S2FX band 1")
+fill(s2fx_u_line2, s2fx_l_line2, color=s2fx_band_color, title="S2FX band 2")
