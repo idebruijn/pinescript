@@ -1,0 +1,103 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+
+//@version=4
+study("DIY:DOT Ben's Risk", overlay=true)
+
+var price01 =12.7084172125201
+var labelText01 = "0.100"  + tostring(price01, " - $ #")
+plot(price01, title='Line', color=color.green, linewidth=1)
+var label01 = label.new(bar_index, price01, text=labelText01)
+label.set_x(label01, 0)
+label.set_color(label01, color.green)
+label.set_xloc(label01, time, xloc.bar_time)
+label.set_style(label01, label.style_label_left)
+
+
+var price02 =14.4304974554368
+var labelText02 = "0.200"  + tostring(price02, " - $ #")
+plot(price02, title='Line', color=color.green, linewidth=1)
+var label02 = label.new(bar_index, price02, text=labelText02)
+label.set_x(label02, 0)
+label.set_color(label02, color.green)
+label.set_xloc(label02, time, xloc.bar_time)
+label.set_style(label02, label.style_label_left)
+
+
+var price03 =18.0678925744063
+var labelText03 = "0.300"  + tostring(price03, " - $ #")
+plot(price03, title='Line', color=color.green, linewidth=1)
+var label03 = label.new(bar_index, price03, text=labelText03)
+label.set_x(label03, 0)
+label.set_color(label03, color.green)
+label.set_xloc(label03, time, xloc.bar_time)
+label.set_style(label03, label.style_label_left)
+
+
+var price04 =24.1382689987937
+var labelText04 = "0.400"  + tostring(price04, " - $ #")
+plot(price04, title='Line', color=color.green, linewidth=1)
+var label04 = label.new(bar_index, price04, text=labelText04)
+label.set_x(label04, 0)
+label.set_color(label04, color.green)
+label.set_xloc(label04, time, xloc.bar_time)
+label.set_style(label04, label.style_label_left)
+
+
+var price05 =32.9959108566755
+var labelText05 = "0.500"  + tostring(price05, " - $ #")
+plot(price05, title='Line', color=color.green, linewidth=1)
+var label05 = label.new(bar_index, price05, text=labelText05)
+label.set_x(label05, 0)
+label.set_color(label05, color.green)
+label.set_xloc(label05, time, xloc.bar_time)
+label.set_style(label05, label.style_label_left)
+
+
+var price06 =44.9993220338983
+var labelText06 = "0.600"  + tostring(price06, " - $ #")
+plot(price06, title='Line', color=color.orange, linewidth=1)
+var label06 = label.new(bar_index, price06, text=labelText06)
+label.set_x(label06, 0)
+label.set_color(label06, color.orange)
+label.set_xloc(label06, time, xloc.bar_time)
+label.set_style(label06, label.style_label_left)
+
+
+var price07 =60.4809358752166
+var labelText07 = "0.700"  + tostring(price07, " - $ #")
+plot(price07, title='Line', color=color.orange, linewidth=1)
+var label07 = label.new(bar_index, price07, text=labelText07)
+label.set_x(label07, 0)
+label.set_color(label07, color.orange)
+label.set_xloc(label07, time, xloc.bar_time)
+label.set_style(label07, label.style_label_left)
+
+
+var price08 =79.7614698385726
+var labelText08 = "0.800"  + tostring(price08, " - $ #")
+plot(price08, title='Line', color=color.red, linewidth=1)
+var label08 = label.new(bar_index, price08, text=labelText08)
+label.set_x(label08, 0)
+label.set_color(label08, color.red)
+label.set_xloc(label08, time, xloc.bar_time)
+label.set_style(label08, label.style_label_left)
+
+
+var price09 =103.167905665214
+var labelText09 = "0.900"  + tostring(price09, " - $ #")
+plot(price09, title='Line', color=color.red, linewidth=1)
+var label09 = label.new(bar_index, price09, text=labelText09)
+label.set_x(label09, 0)
+label.set_color(label09, color.red)
+label.set_xloc(label09, time, xloc.bar_time)
+label.set_style(label09, label.style_label_left)
+
+
+var price10 =123.628877935634
+var labelText10 = "1.000" + tostring(price10, " - $ #")
+plot(price10, title='Line', color=color.red, linewidth=1)
+var label10 = label.new(bar_index, price10, text=labelText10)
+label.set_x(label10, 0)
+label.set_color(label10, color.red)
+label.set_xloc(label10, time, xloc.bar_time)
+label.set_style(label10, label.style_label_left)
