@@ -1,0 +1,32 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+
+//@version=4
+study("DIY: Pi Cycle Bitcoin top indicator", shorttitle="DIY: BTC Pi Cycle top indicator", overlay=true)
+
+// lines
+// MA
+xSMA1 = sma(close, 350)*2
+xSMA5 = sma(close, 111)
+
+// MA plot
+plot(xSMA1, linewidth=1, color=#7FFF00, title="MA 350 * 2")
+plot(xSMA5, linewidth=1, color=#FFA500, title="MA 111")
+
+// label
+len_ma_long = input(350, minval=1, title="Long Moving Average")
+len_ma_short = input(111, minval=1, title="Short Moving Average")
+resolution = input('D', type=input.string, title="Time interval")
+is_show_ma = input(false, type=input.bool, title="Show Moving Averages ?")
+is_alert = input(true, type=input.bool, title="Send an alert on Pi Cycle Top?")
+
+ma_long = security(syminfo.tickerid, resolution, sma(close, len_ma_long)*2)
+ma_short = security(syminfo.tickerid, resolution, sma(close, len_ma_short))
+src = security(syminfo.tickerid, resolution, close)
+
+plot(is_show_ma?ma_long:na, color=color.green)
+plot(is_show_ma?ma_short:na, color=color.red)
+
+PiCycleTop = crossunder(ma_long, ma_short) ? src + (src/100 * 10) : na
+
+plotshape(PiCycleTop, style=shape.labeldown,size=size.normal, text="BTC Pi Cycle top (within 3 days)!", color=color.red, textcolor=color.white, location=location.absolute)
+alertcondition(condition=PiCycleTop, title="Pi Cycle", message="The Pi Cycle Top has been reached, historically Bitcoin tops within 3 days of reaching this ratio, More info : https://medium.com/@positivecrypto/the-golden-ratio-multiplier-c2567401e12a")
