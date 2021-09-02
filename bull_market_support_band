@@ -1,0 +1,21 @@
+//@version=4
+study(title="DIY: Bull Market Support Band", shorttitle="DIY: Bull Market Support Band (20MA/21EMA)", overlay=true)
+len20 = input(20, "SMA Length")
+len21 = input(20, "SMA Length")
+src = input(close, title="Source")
+
+sma20  = security(syminfo.tickerid, 'W', sma(src, len20), barmerge.gaps_on, barmerge.lookahead_on)
+ema21  = security(syminfo.tickerid, 'W', ema(src, len21), barmerge.gaps_on, barmerge.lookahead_on)
+
+p1 = plot(sma20, color=color.rgb(255,13,0), linewidth=2)
+p2 = plot(ema21, color=color.rgb(0,255,76), linewidth=2)
+fill(p1, p2, color=color.rgb(255,255,0, 80))
+
+var label maLabel20 = na
+maLabel20 := label.new(x=bar_index, y=int(sma20), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 10), text=tostring(sma20, "$ #"))
+label.delete(maLabel20[1])
+
+var label maLabel21 = na
+maLabel21 := label.new(x=bar_index, y=int(ema21), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 10), text=tostring(ema21, "$ #"))
+label.delete(maLabel21[1])
+
