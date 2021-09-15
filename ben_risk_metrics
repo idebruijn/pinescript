@@ -2,144 +2,171 @@
 //@version=4
 study("DIY: Ben's Risk", overlay=true)
 
-input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK"])
+input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
 price01 = if (input == "BTC")
-    14571.6633793557
+    14927.9869067103
 else
     if (input == "ETH")
-        354.989731879999
+        372.854539333929
     else
         if (input == "ADA")
-            0.171807519587235
+            0.182826569816305
         else
             if (input == "DOT")
-                12.8110036374694
+                13.3607795739538
             else
                 if (input == "LINK")
-                    10.161301716249
+                    10.4195022032962
+                else
+                    if (input == "TMC")
+                        488000188750.472
 
 price02 = if (input == "BTC")
-    19104.0645546922
+    19563.0288166769
 else
     if (input == "ETH")
-        620.779796189632
+        649.130396397987
     else
         if (input == "ADA")
-            0.422453634460066
+            0.449166798920806
         else
             if (input == "DOT")
-                14.6055121138316
+                15.0302984119243
             else
                 if (input == "LINK")
-                    12.3615708959125
+                    12.5889703150856
+                else
+                    if (input == "TMC")
+                        659096233555.596
 
 price03 = if (input == "BTC")
-    26352.0922288642
+    26977.2094641615
 else
     if (input == "ETH")
-        1213.20893690155
+        1269.15702479339
     else
         if (input == "ADA")
-            0.959176769100648
+            1.0213424360365
         else
             if (input == "DOT")
-                18.2924336392955
+                18.862270249409
             else
                 if (input == "LINK")
-                    17.0923037422171
+                    17.4094011097647
+                else
+                    if (input == "TMC")
+                        659096233555.596
 
 price04 = if (input == "BTC")
-    36220.4733199375
+    37072.4919835089
 else
     if (input == "ETH")
-        2195.21069456553
+        2294.25200803213
     else
         if (input == "ADA")
-            1.85253006231897
+            1.96828475336323
         else
             if (input == "DOT")
-                24.4318369802241
+                25.1959846286566
             else
                 if (input == "LINK")
-                    24.9548794272796
+                    25.4125257277272
+                else
+                    if (input == "TMC")
+                        933500651890.482
 
 price05 = if (input == "BTC")
-    48645.6962719298
+    49783.3146696529
 else
     if (input == "ETH")
-        3632.35594953972
+        3793.63266718574
     else
         if (input == "ADA")
-            3.15741530587375
+            3.35724101825797
         else
             if (input == "DOT")
-                33.3963138493944
+                34.4442998155982
             else
                 if (input == "LINK")
-                    36.4394021007272
+                    37.1004143646409
+                else
+                    if (input == "TMC")
+                        1309244482173.18
 
 price06 = if (input == "BTC")
-    63581.2186843381
+    65060.4751619871
 else
     if (input == "ETH")
-        5583.53564334584
+        5832.14913823426
     else
         if (input == "ADA")
-            4.93702506063056
+            5.24891183750107
         else
             if (input == "DOT")
-                45.5429757785467
+                46.9702507437314
             else
                 if (input == "LINK")
-                    51.9977096546864
+                    52.943796013647
+                else
+                    if (input == "TMC")
+                        1783796199624.14
 
 price07 = if (input == "BTC")
-    80985.5206979766
+    82865.6149021099
 else
     if (input == "ETH")
-        8108.94170911149
+        8469.78950489179
     else
         if (input == "ADA")
-            7.25123684210526
+            7.71081125645817
         else
             if (input == "DOT")
-                61.2079887383424
+                63.1284520348837
             else
                 if (input == "LINK")
-                    72.0751693002257
+                    73.3870302474794
+                else
+                    if (input == "TMC")
+                        2348725707257.07
 
 price08 = if (input == "BTC")
-    100830.426560202
+    103165.515753129
 else
     if (input == "ETH")
-        11269.1555493469
+        11770.5551907784
     else
         if (input == "ADA")
-            10.165493867011
+            10.8091750725439
         else
             if (input == "DOT")
-                80.7210752688172
+                83.2542863504788
             else
                 if (input == "LINK")
-                    97.0975609756097
+                    98.8635980914959
+                else
+                    if (input == "TMC")
+                        3015547008547.01
 
 price09 = if (input == "BTC")
-    123086.70112782
+    125932.471264368
 else
     if (input == "ETH")
         14871.4374869981
     else
         if (input == "ADA")
-            13.7484318645131
+            14.6201805450097
         else
             if (input == "DOT")
-                104.409479409479
+                107.686133333333
             else
                 if (input == "LINK")
-                    127.495845795946
+                    129.814527027027
+                else
+                    if (input == "TMC")
+                        3777551612903.23
 
 price10 = if (input == "BTC")
-    141347.727272727
+    144612.64516129
 else
     if (input == "ETH")
         18203.2319391635
@@ -148,10 +175,13 @@ else
             16.9232682221016
         else
             if (input == "DOT")
-                125.115916446014
+                129.042197935641
             else
                 if (input == "LINK")
-                    154.087301587302
+                    156.88995398773
+                else
+                    if (input == "TMC")
+                        4632669077757.69
 
 var labelText01 = "0.100"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.green, linewidth=1)
