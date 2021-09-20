@@ -1,5 +1,12 @@
 //@version=4
-study(title="DIY: Bull Market Support Band+", shorttitle="DIY: Bull Market Support Band (20MA/21EMA+8SMA)", overlay=true)
+study(title="DIY: Bull Market Support Band", shorttitle="DIY: Bull Market Support Band (20MA/21EMA)", overlay=true)
+
+// Amateur switch 8 week SMA
+switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
+transp = 100
+if (switch)
+    transp := 0
+
 len8 = input(8, "SMA Length")
 len20 = input(20, "SMA Length")
 len21 = input(21, "EMA Length")
@@ -10,13 +17,13 @@ sma20  = security(syminfo.tickerid, 'W', sma(src, len20), barmerge.gaps_on, barm
 ema21  = security(syminfo.tickerid, 'W', ema(src, len21), barmerge.gaps_on, barmerge.lookahead_on)
 
 
-p0 = plot(sma8, color=color.rgb(255,128,00), linewidth=2)
-p1 = plot(sma20, color=color.rgb(255,13,0), linewidth=2)
-p2 = plot(ema21, color=color.rgb(0,255,76), linewidth=2)
+plot(sma8, color=color.new(color.orange, transp), linewidth=2)
+p1 = plot(sma20, color=color.new(color.red, 0), linewidth=2)
+p2 = plot(ema21, color=color.new(color.green, 0), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
 
 var label maLabel8 = na
-maLabel8 := label.new(x=bar_index, y=int(sma8), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 10), text=tostring(sma8, "$ #"))
+maLabel8 := label.new(x=bar_index, y=int(sma8), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, transp), text=tostring(sma8, "$ #"))
 label.delete(maLabel8[1])
 
 var label maLabel20 = na
@@ -26,4 +33,3 @@ label.delete(maLabel20[1])
 var label maLabel21 = na
 maLabel21 := label.new(x=bar_index, y=int(ema21), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 10), text=tostring(ema21, "$ #"))
 label.delete(maLabel21[1])
-
