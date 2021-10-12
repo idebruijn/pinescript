@@ -69,7 +69,7 @@ maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.styl
 label.delete(maLabel8[1])
 
 var label maLabel20 = na
-maLabel20 := label.new(x=bar_index, y=int(ma2), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma2, "$ # - 20d sma"), textcolor=color.red)
+maLabel20 := label.new(x=bar_index, y=int(ma2), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma2, "$ # - 2Od sma"), textcolor=color.red)
 label.delete(maLabel20[1])
 
 var label maLabel21 = na
