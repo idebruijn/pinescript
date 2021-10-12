@@ -30,3 +30,61 @@ PiCycleTop = crossunder(ma_long, ma_short) ? src + (src/100 * 10) : na
 
 plotshape(PiCycleTop, style=shape.labeldown,size=size.normal, text="BTC Pi Cycle top (within 3 days)!", color=color.red, textcolor=color.white, location=location.absolute)
 alertcondition(condition=PiCycleTop, title="Pi Cycle", message="The Pi Cycle Top has been reached, historically Bitcoin tops within 3 days of reaching this ratio, More info : https://medium.com/@positivecrypto/the-golden-ratio-multiplier-c2567401e12a")
+
+
+// Forecast!
+ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
+ma1Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA1")
+
+ma2Enabled = input(title="MA 2", type=input.bool, defval=true, group="Moving Average", inline="MA2")
+ma2Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA2")
+
+ma_prediction(_src, _period, _offset) =>
+    (sma(_src, _period - _offset) * (_period - _offset) + _src * _offset) / _period
+    
+ma_predictionMultiply(_src, _period, _offset) =>
+    ((sma(_src, _period - _offset)*2) * (_period - _offset) + _src * _offset) / _period    
+
+pma1_1 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 1))
+pma1_2 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 2))
+pma1_3 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 3))
+pma1_4 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 4))
+pma1_5 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 5))
+pma1_6 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 6))
+pma1_7 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 7))
+pma1_8 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 8))
+pma1_9 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 9))
+pma1_10 = security(syminfo.tickerid, resolution, ma_prediction( close, len_ma_short, 10))
+
+pma2_1 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 1))
+pma2_2 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 2))
+pma2_3 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 3))
+pma2_4 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 4))
+pma2_5 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 5))
+pma2_6 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 6))
+pma2_7 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 7))
+pma2_8 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 8))
+pma2_9 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 9))
+pma2_10 = security(syminfo.tickerid, resolution, ma_predictionMultiply( close, len_ma_long, 10))
+
+plot(ma1Enabled and ma1Forecast ? pma1_1 : na, title="MA 1 Forecast 1", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=1, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_2 : na, title="MA 1 Forecast 2", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=2, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_3 : na, title="MA 1 Forecast 3", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=3, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_4 : na, title="MA 1 Forecast 4", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=4, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_5 : na, title="MA 1 Forecast 5", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=5, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_6 : na, title="MA 1 Forecast 6", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=6, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_7 : na, title="MA 1 Forecast 7", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=7, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_8 : na, title="MA 1 Forecast 8", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=8, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_9 : na, title="MA 1 Forecast 9", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=9, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_10 : na, title="MA 1 Forecast 10", color=color.new(color.orange, 0), linewidth=1, style=plot.style_circles, offset=10, show_last=1)
+
+plot(ma2Enabled and ma2Forecast ? pma2_1 : na, title="MA 2 Forecast 1", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=1, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_2 : na, title="MA 2 Forecast 2", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=2, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_3 : na, title="MA 2 Forecast 3", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=3, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_4 : na, title="MA 2 Forecast 4", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=4, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_5 : na, title="MA 2 Forecast 5", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=5, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_6 : na, title="MA 2 Forecast 6", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=6, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_7 : na, title="MA 2 Forecast 7", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=7, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_8 : na, title="MA 2 Forecast 8", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=8, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_9 : na, title="MA 2 Forecast 9", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=9, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_10 : na, title="MA 2 Forecast 10", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=10, show_last=1)
