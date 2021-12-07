@@ -28,6 +28,13 @@ ma3Resolution = input(title="", type=input.resolution, defval="", group="Moving 
 ma3Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA33")
 ma3Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA33")
 
+ma4Enabled = input(title="MA 4", type=input.bool, defval=true, group="Moving Average", inline="MA4")
+ma4Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA4")
+ma4Length = input(title="", type=input.integer, defval=50, minval=1, group="Moving Average", inline="MA4")
+ma4Resolution = input(title="", type=input.resolution, defval="", group="Moving Average", inline="MA44")
+ma4Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA44")
+ma4Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA44")
+
 ma(_type, _src, _len) =>
     if _type == "EMA"
         ema(_src, _len)
@@ -40,6 +47,7 @@ ma_prediction(_type, _src, _period, _offset) =>
 ma1 = security(syminfo.tickerid, "W", ma(ma1Type, ma1Source, ma1Length), barmerge.gaps_on, barmerge.lookahead_on)
 ma2 = security(syminfo.tickerid, "W", ma(ma2Type, ma2Source, ma2Length), barmerge.gaps_on, barmerge.lookahead_on)
 ma3 = security(syminfo.tickerid, "W", ma(ma3Type, ma3Source, ma3Length), barmerge.gaps_on, barmerge.lookahead_on)
+ma4 = security(syminfo.tickerid, "W", ma(ma4Type, ma4Source, ma4Length), barmerge.gaps_on, barmerge.lookahead_on)
 
 pma1_1 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 1))
 pma1_2 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 2))
@@ -59,9 +67,16 @@ pma3_3 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Le
 pma3_4 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 4))
 pma3_5 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 5))
 
+pma4_1 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 1))
+pma4_2 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 2))
+pma4_3 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 3))
+pma4_4 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 4))
+pma4_5 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 5))
+
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
+plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, 0), linewidth=2)
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
-p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, 0), linewidth=2)
+p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, transp), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
 
 var label maLabel8 = na
@@ -76,54 +91,30 @@ var label maLabel21 = na
 maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 100), text=tostring(ma3, "$ # - 21d ema"), textcolor=color.green)
 label.delete(maLabel21[1])
 
-plot(ma1Enabled and ma1Forecast ? pma1_1 : na, title="MA 1 Forecast 1", color=color.new(color.orange, transp), linewidth=1, style=plot.style_circles, offset=1, show_last=1)
-plot(ma1Enabled and ma1Forecast ? pma1_2 : na, title="MA 1 Forecast 2", color=color.new(color.orange, transp), linewidth=1, style=plot.style_circles, offset=2, show_last=1)
-plot(ma1Enabled and ma1Forecast ? pma1_3 : na, title="MA 1 Forecast 3", color=color.new(color.orange, transp), linewidth=1, style=plot.style_circles, offset=3, show_last=1)
-plot(ma1Enabled and ma1Forecast ? pma1_4 : na, title="MA 1 Forecast 4", color=color.new(color.orange, transp), linewidth=1, style=plot.style_circles, offset=4, show_last=1)
-plot(ma1Enabled and ma1Forecast ? pma1_5 : na, title="MA 1 Forecast 5", color=color.new(color.orange, transp), linewidth=1, style=plot.style_circles, offset=5, show_last=1)
+var label maLabel50 = na
+maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 50d sma"), textcolor=color.blue)
+label.delete(maLabel50[1])
 
-plot(ma2Enabled and ma2Forecast ? pma2_1 : na, title="MA 2 Forecast 1", color=color.new(color.red, 0), linewidth=1, style=plot.style_circles, offset=1, show_last=1)
-plot(ma2Enabled and ma2Forecast ? pma2_2 : na, title="MA 2 Forecast 2", color=color.new(color.red, 0), linewidth=1, style=plot.style_circles, offset=2, show_last=1)
-plot(ma2Enabled and ma2Forecast ? pma2_3 : na, title="MA 2 Forecast 3", color=color.new(color.red, 0), linewidth=1, style=plot.style_circles, offset=3, show_last=1)
-plot(ma2Enabled and ma2Forecast ? pma2_4 : na, title="MA 2 Forecast 4", color=color.new(color.red, 0), linewidth=1, style=plot.style_circles, offset=4, show_last=1)
-plot(ma2Enabled and ma2Forecast ? pma2_5 : na, title="MA 2 Forecast 5", color=color.new(color.red, 0), linewidth=1, style=plot.style_circles, offset=5, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_1 : na, title="MA 1 Forecast 1", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_2 : na, title="MA 1 Forecast 2", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_3 : na, title="MA 1 Forecast 3", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_4 : na, title="MA 1 Forecast 4", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
+plot(ma1Enabled and ma1Forecast ? pma1_5 : na, title="MA 1 Forecast 5", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
 
-plot(ma3Enabled and ma3Forecast ? pma3_1 : na, title="MA 3 Forecast 1", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=1, show_last=1)
-plot(ma3Enabled and ma3Forecast ? pma3_2 : na, title="MA 3 Forecast 2", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=2, show_last=1)
-plot(ma3Enabled and ma3Forecast ? pma3_3 : na, title="MA 3 Forecast 3", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=3, show_last=1)
-plot(ma3Enabled and ma3Forecast ? pma3_4 : na, title="MA 3 Forecast 4", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=4, show_last=1)
-plot(ma3Enabled and ma3Forecast ? pma3_5 : na, title="MA 3 Forecast 5", color=color.new(color.green, 0), linewidth=1, style=plot.style_circles, offset=5, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_1 : na, title="MA 2 Forecast 1", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_2 : na, title="MA 2 Forecast 2", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_3 : na, title="MA 2 Forecast 3", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_4 : na, title="MA 2 Forecast 4", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
+plot(ma2Enabled and ma2Forecast ? pma2_5 : na, title="MA 2 Forecast 5", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
 
+plot(ma3Enabled and ma3Forecast ? pma3_1 : na, title="MA 3 Forecast 1", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
+plot(ma3Enabled and ma3Forecast ? pma3_2 : na, title="MA 3 Forecast 2", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
+plot(ma3Enabled and ma3Forecast ? pma3_3 : na, title="MA 3 Forecast 3", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
+plot(ma3Enabled and ma3Forecast ? pma3_4 : na, title="MA 3 Forecast 4", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
+plot(ma3Enabled and ma3Forecast ? pma3_5 : na, title="MA 3 Forecast 5", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
 
-
-
-
-
-// OLD
-
-// len8 = input(8, "SMA Length")
-// len20 = input(20, "SMA Length")
-// len21 = input(21, "EMA Length")
-// src = input(close, title="Source")
-
-// sma8  = security(syminfo.tickerid, 'W', sma(src, len8), barmerge.gaps_on, barmerge.lookahead_on)
-// sma20  = security(syminfo.tickerid, 'W', sma(src, len20), barmerge.gaps_on, barmerge.lookahead_on)
-// ema21  = security(syminfo.tickerid, 'W', ema(src, len21), barmerge.gaps_on, barmerge.lookahead_on)
-
-
-// plot(sma8, color=color.new(color.orange, transp), linewidth=2)
-// p1 = plot(sma20, color=color.new(color.red, 0), linewidth=2)
-// p2 = plot(ema21, color=color.new(color.green, 0), linewidth=2)
-// fill(p1, p2, color=color.rgb(255,255,0, 80))
-
-// var label maLabel8 = na
-// maLabel8 := label.new(x=bar_index, y=int(sma8), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, transp), text=tostring(sma8, "$ # - 8d sma"))
-// label.delete(maLabel8[1])
-
-// var label maLabel20 = na
-// maLabel20 := label.new(x=bar_index, y=int(sma20), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 10), text=tostring(sma20, "$ # - 20d sma"))
-// label.delete(maLabel20[1])
-
-// var label maLabel21 = na
-// maLabel21 := label.new(x=bar_index, y=int(ema21), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 10), text=tostring(ema21, "$ # - 21d ema"))
-// label.delete(maLabel21[1])
+plot(ma4Enabled and ma4Forecast ? pma4_1 : na, title="MA 4 Forecast 1", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
+plot(ma4Enabled and ma4Forecast ? pma4_2 : na, title="MA 4 Forecast 2", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
+plot(ma4Enabled and ma4Forecast ? pma4_3 : na, title="MA 4 Forecast 3", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
+plot(ma4Enabled and ma4Forecast ? pma4_4 : na, title="MA 4 Forecast 4", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
+plot(ma4Enabled and ma4Forecast ? pma4_5 : na, title="MA 4 Forecast 5", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
