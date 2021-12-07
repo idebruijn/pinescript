@@ -2,7 +2,7 @@
 study(title="DIY: Bull Market Support Band", shorttitle="DIY: Bull Market Support Band (20MA/21EMA)", overlay=true)
 
 // Amateur switch 8 week SMA
-switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
+switch = input(title="On/Off 8/50 week SMA", type=input.bool, defval=true)
 transp = 100
 if (switch)
     transp := 0
@@ -74,7 +74,7 @@ pma4_4 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Le
 pma4_5 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 5))
 
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
-plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, 0), linewidth=2)
+plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp), linewidth=2)
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
 p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, transp), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
