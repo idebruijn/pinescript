@@ -92,7 +92,7 @@ maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.sty
 label.delete(maLabel21[1])
 
 var label maLabel50 = na
-maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 50d sma"), textcolor=color.blue)
+maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 5Od sma"), textcolor=color.blue)
 label.delete(maLabel50[1])
 
 plot(ma1Enabled and ma1Forecast ? pma1_1 : na, title="MA 1 Forecast 1", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
