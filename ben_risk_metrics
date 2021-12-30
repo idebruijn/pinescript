@@ -4,186 +4,186 @@ study("DIY: Ben's Risk", overlay=true)
 
 input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
 price01 = if (input == "BTC")
-    18039.4768514804
+    19323.4493797519
 else
     if (input == "ETH")
-        487.156455113622
+        570.478576584993
     else
         if (input == "ADA")
-            0.250380667236955
+            0.280500506959167
         else
             if (input == "DOT")
-                17.4696358424461
+                19.6450275247001
             else
                 if (input == "LINK")
-                    11.7622703029518
+                    12.293534311781
                 else
                     if (input == "TMC")
-                        623281519381.57
+                        693694125159.642
 
 price02 = if (input == "BTC")
-    23581.191588785
+    25212.2728672621
 else
     if (input == "ETH")
-        867.792701908111
+        1020.86786933203
     else
         if (input == "ADA")
-            0.617307266282676
+            0.690809097688293
         else
             if (input == "DOT")
-                19.708777910346
+                22.1352933635315
             else
                 if (input == "LINK")
-                    14.2244104159843
+                    14.9130467430073
                 else
                     if (input == "TMC")
-                        840132912818.202
+                        933236848728.92
 
 price03 = if (input == "BTC")
-    32439.7916666667
+    34631.5083798883
 else
     if (input == "ETH")
-        1698.08674855963
+        1995.00092120617
     else
         if (input == "ADA")
-            1.40521360599312
+            1.57109908213697
         else
             if (input == "DOT")
-                24.7092294774914
+                27.7694424330196
             else
                 if (input == "LINK")
-                    19.6895406360424
+                    20.6529595478882
                 else
                     if (input == "TMC")
-                        840132912818.202
+                        933236848728.92
 
 price04 = if (input == "BTC")
-    44500.9583789704
+    47456.5028901734
 else
     if (input == "ETH")
-        3071.03419164204
+        3611.53691813804
     else
         if (input == "ADA")
-            2.70431147438697
+            3.02567783673766
         else
             if (input == "DOT")
-                33.0016496546036
+                37.0940959409594
             else
                 if (input == "LINK")
-                    28.7432610124918
+                    30.1487516117689
                 else
                     if (input == "TMC")
-                        1189638633377.14
+                        1320202751629.25
 
 price05 = if (input == "BTC")
-    59688.699716241
+    63606.0767590618
 else
     if (input == "ETH")
-        5080.17475498878
+        5975.46366259102
     else
         if (input == "ADA")
-            4.61262231798187
+            5.16164137380192
         else
             if (input == "DOT")
-                45.1184041184041
+                50.7122439256789
             else
                 if (input == "LINK")
-                    41.9650145772595
+                    44.019013276512
                 else
                     if (input == "TMC")
-                        1662100300042.86
+                        1841901608325.45
 
 price06 = if (input == "BTC")
-    77940.8983451537
+    83014.135021097
 else
     if (input == "ETH")
-        7808.94959962318
+        9185.89907086901
     else
         if (input == "ADA")
-            7.21337429111531
+            8.07256122039341
         else
             if (input == "DOT")
-                61.53208606174
+                69.1588173178458
             else
                 if (input == "LINK")
-                    59.8873067534581
+                    62.8190557573168
                 else
                     if (input == "TMC")
-                        2258138676509.36
+                        2499692486219.9
 
 price07 = if (input == "BTC")
-    99214.3671607754
+    105635.131865473
 else
     if (input == "ETH")
-        11342.1985815603
+        13341.6365154467
     else
         if (input == "ADA")
-            10.5961890243902
+            11.8580194307142
         else
             if (input == "DOT")
-                82.6979659413434
+                92.9487927832316
             else
                 if (input == "LINK")
-                    83.0101377696906
+                    87.0735694822888
                 else
                     if (input == "TMC")
-                        2980468750000.
+                        3295509641873.28
 
 price08 = if (input == "BTC")
-    123468.468468468
+    131425.403777717
 else
     if (input == "ETH")
-        15759.8983282823
+        18537.6013904983
     else
         if (input == "ADA")
-            14.8546413104877
+            16.6233248245054
         else
             if (input == "DOT")
-                109.061605839416
+                122.582079790713
             else
                 if (input == "LINK")
-                    111.829097839898
+                    117.30314171123
                 else
                     if (input == "TMC")
-                        3818671706263.5
+                        4227673956262.43
 
 price09 = if (input == "BTC")
-    150670.200573066
+    160350.10673986
 else
     if (input == "ETH")
-        21151.0787102892
+        24880.2826659277
     else
         if (input == "ADA")
-            20.0902560537597
+            22.4823212913144
         else
             if (input == "DOT")
-                141.067297581493
+                158.555031446541
             else
                 if (input == "LINK")
-                    146.838746656477
+                    154.02615694165
                 else
                     if (input == "TMC")
-                        4780916155419.22
+                        5288090293453.72
 
 price10 = if (input == "BTC")
-    172988.293284042
+    184081.44499179
 else
     if (input == "ETH")
-        25889.6871223311
+        30454.3159223607
     else
         if (input == "ADA")
-            24.7293018942906
+            27.6741131067241
         else
             if (input == "DOT")
-                169.044515103339
+                190
             else
                 if (input == "LINK")
-                    177.465449804433
+                    186.151916058394
                 else
                     if (input == "TMC")
-                        5858688899040.66
+                        6484272727272.73
 
-var labelText01 = "0.100"  + tostring(price01, " - $ #.##")
+var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.green, linewidth=1)
 var label01 = label.new(bar_index, price01, text=labelText01)
 label.set_x(label01, 0)
@@ -191,7 +191,7 @@ label.set_color(label01, color.green)
 label.set_xloc(label01, time, xloc.bar_time)
 label.set_style(label01, label.style_label_left)
 
-var labelText02 = "0.200"  + tostring(price02, " - $ #.##")
+var labelText02 = "0.2"  + tostring(price02, " - $ #.##")
 plot(price02, title='Line', color=color.green, linewidth=1)
 var label02 = label.new(bar_index, price02, text=labelText02)
 label.set_x(label02, 0)
@@ -199,7 +199,7 @@ label.set_color(label02, color.green)
 label.set_xloc(label02, time, xloc.bar_time)
 label.set_style(label02, label.style_label_left)
 
-var labelText03 = "0.300"  + tostring(price03, " - $ #.##")
+var labelText03 = "0.3"  + tostring(price03, " - $ #.##")
 plot(price03, title='Line', color=color.green, linewidth=1)
 var label03 = label.new(bar_index, price03, text=labelText03)
 label.set_x(label03, 0)
@@ -207,7 +207,7 @@ label.set_color(label03, color.green)
 label.set_xloc(label03, time, xloc.bar_time)
 label.set_style(label03, label.style_label_left)
 
-var labelText04 = "0.400"  + tostring(price04, " - $ #.##")
+var labelText04 = "0.4"  + tostring(price04, " - $ #.##")
 plot(price04, title='Line', color=color.green, linewidth=1)
 var label04 = label.new(bar_index, price04, text=labelText04)
 label.set_x(label04, 0)
@@ -215,7 +215,7 @@ label.set_color(label04, color.green)
 label.set_xloc(label04, time, xloc.bar_time)
 label.set_style(label04, label.style_label_left)
 
-var labelText05 = "0.500"  + tostring(price05, " - $ #.##")
+var labelText05 = "0.5"  + tostring(price05, " - $ #.##")
 plot(price05, title='Line', color=color.green, linewidth=1)
 var label05 = label.new(bar_index, price05, text=labelText05)
 label.set_x(label05, 0)
@@ -223,7 +223,7 @@ label.set_color(label05, color.green)
 label.set_xloc(label05, time, xloc.bar_time)
 label.set_style(label05, label.style_label_left)
 
-var labelText06 = "0.600"  + tostring(price06, " - $ #.##")
+var labelText06 = "0.6"  + tostring(price06, " - $ #.##")
 plot(price06, title='Line', color=color.orange, linewidth=1)
 var label06 = label.new(bar_index, price06, text=labelText06)
 label.set_x(label06, 0)
@@ -231,7 +231,7 @@ label.set_color(label06, color.orange)
 label.set_xloc(label06, time, xloc.bar_time)
 label.set_style(label06, label.style_label_left)
 
-var labelText07 = "0.700"  + tostring(price07, " - $ #.##")
+var labelText07 = "0.7"  + tostring(price07, " - $ #.##")
 plot(price07, title='Line', color=color.orange, linewidth=1)
 var label07 = label.new(bar_index, price07, text=labelText07)
 label.set_x(label07, 0)
@@ -239,7 +239,7 @@ label.set_color(label07, color.orange)
 label.set_xloc(label07, time, xloc.bar_time)
 label.set_style(label07, label.style_label_left)
 
-var labelText08 = "0.800"  + tostring(price08, " - $ #.##")
+var labelText08 = "0.8"  + tostring(price08, " - $ #.##")
 plot(price08, title='Line', color=color.red, linewidth=1)
 var label08 = label.new(bar_index, price08, text=labelText08)
 label.set_x(label08, 0)
@@ -247,7 +247,7 @@ label.set_color(label08, color.red)
 label.set_xloc(label08, time, xloc.bar_time)
 label.set_style(label08, label.style_label_left)
 
-var labelText09 = "0.900"  + tostring(price09, " - $ #.##")
+var labelText09 = "0.9"  + tostring(price09, " - $ #.##")
 plot(price09, title='Line', color=color.red, linewidth=1)
 var label09 = label.new(bar_index, price09, text=labelText09)
 label.set_x(label09, 0)
@@ -255,7 +255,7 @@ label.set_color(label09, color.red)
 label.set_xloc(label09, time, xloc.bar_time)
 label.set_style(label09, label.style_label_left)
 
-var labelText10 = "1.000" + tostring(price10, " - $ #.##")
+var labelText10 = "1.0" + tostring(price10, " - $ #.##")
 plot(price10, title='Line', color=color.red, linewidth=1)
 var label10 = label.new(bar_index, price10, text=labelText10)
 label.set_x(label10, 0)
