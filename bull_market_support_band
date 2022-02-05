@@ -2,10 +2,18 @@
 study(title="DIY: Bull Market Support Band", shorttitle="DIY: Bull Market Support Band (20MA/21EMA)", overlay=true)
 
 // Amateur switch 8 week SMA
-switch = input(title="On/Off 8/50 week SMA", type=input.bool, defval=true)
+switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
 transp = 100
 if (switch)
     transp := 0
+    
+// Amateur switch 50 week SMA
+switch50 = input(title="On/Off 50 week SMA", type=input.bool, defval=false)
+transp50 = 100
+fill50 = 100
+if (switch50)
+    transp50 := 0
+    fill50 := 80
 
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
@@ -88,12 +96,12 @@ pma5_4 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Le
 pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 5))
 
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
-p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp), linewidth=2)
-p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp), linewidth=2)
+p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp50), linewidth=2)
+p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp50), linewidth=2)
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
 p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, transp), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
-fill(p4, p5, color=color.rgb(255,255,0, 80))
+fill(p4, p5, color=color.rgb(255,255,0, fill50))
 
 var label maLabel8 = na
 maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 100), text=tostring(ma1, "$ # - 8d sma"), textcolor=color.orange)
