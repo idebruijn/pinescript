@@ -161,7 +161,7 @@ label.delete(maLabel52[1])
 switchCowenCorridor = input(title="On/Off Cowen Corridor", type=input.bool, defval=true)
 showCowenCorridor = 100
 fillCowenCorridor = 100
-if (switchCowenCorridor)
+if (switchCowenCorridor and timeframe.isweekly)
     showCowenCorridor := 0
     fillCowenCorridor := 90
 
