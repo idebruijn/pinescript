@@ -1,5 +1,5 @@
 //@version=4
-study(title="DIY: Bull Market Support Band", shorttitle="DIY: Bull Market Support Band (20MA/21EMA)", overlay=true)
+study(title="DIY: BMSB, Risk, Corridor", shorttitle="DIY: BMSB(20MA/21EMA), Risk, Corridor", overlay=true)
 
 // Amateur switch 8 week SMA
 switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
@@ -152,6 +152,33 @@ label.delete(maLabel52[1])
 // plot(ma5Enabled and ma5Forecast ? pma5_3 : na, title="MA 5 Forecast 3", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
 // plot(ma5Enabled and ma5Forecast ? pma5_4 : na, title="MA 5 Forecast 4", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
 // plot(ma5Enabled and ma5Forecast ? pma5_5 : na, title="MA 5 Forecast 5", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
+
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+//@version=4
+//study("DIY: The Cowen Corridor", overlay=true, resolution="W")
+
+// Amateur switch show Ben's Risk
+switchCowenCorridor = input(title="On/Off Cowen Corridor", type=input.bool, defval=true)
+showCowenCorridor = 100
+fillCowenCorridor = 100
+if (switchCowenCorridor)
+    showCowenCorridor := 0
+    fillCowenCorridor := 90
+
+// Days X-Axis Value
+
+start = time == timestamp(2010,7,18,0,0) // First BLX Bitcoin Date
+days = security("BNC:BLX", "D", barssince(start))
+c=sma(close, 20)
+
+pi=3.1415926535
+y1 = c*(16*pi*pi)/sqrt(days)
+y2 = c/100*sqrt(days)
+
+plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
+plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
+fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
+
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
