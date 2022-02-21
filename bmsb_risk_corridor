@@ -123,35 +123,6 @@ var label maLabel52 = na
 maLabel52 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.style_label_left, color=color.new(color.yellow, 100), text=tostring(ma5, "$ # - 52d ema"), textcolor=color.new(color.yellow, transp50))
 label.delete(maLabel52[1])
 
-// plot(ma1Enabled and ma1Forecast ? pma1_1 : na, title="MA 1 Forecast 1", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
-// plot(ma1Enabled and ma1Forecast ? pma1_2 : na, title="MA 1 Forecast 2", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
-// plot(ma1Enabled and ma1Forecast ? pma1_3 : na, title="MA 1 Forecast 3", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
-// plot(ma1Enabled and ma1Forecast ? pma1_4 : na, title="MA 1 Forecast 4", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
-// plot(ma1Enabled and ma1Forecast ? pma1_5 : na, title="MA 1 Forecast 5", color=color.new(color.orange, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
-
-// plot(ma2Enabled and ma2Forecast ? pma2_1 : na, title="MA 2 Forecast 1", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
-// plot(ma2Enabled and ma2Forecast ? pma2_2 : na, title="MA 2 Forecast 2", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
-// plot(ma2Enabled and ma2Forecast ? pma2_3 : na, title="MA 2 Forecast 3", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
-// plot(ma2Enabled and ma2Forecast ? pma2_4 : na, title="MA 2 Forecast 4", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
-// plot(ma2Enabled and ma2Forecast ? pma2_5 : na, title="MA 2 Forecast 5", color=color.new(color.red, 0), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
-
-// plot(ma3Enabled and ma3Forecast ? pma3_1 : na, title="MA 3 Forecast 1", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
-// plot(ma3Enabled and ma3Forecast ? pma3_2 : na, title="MA 3 Forecast 2", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
-// plot(ma3Enabled and ma3Forecast ? pma3_3 : na, title="MA 3 Forecast 3", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
-// plot(ma3Enabled and ma3Forecast ? pma3_4 : na, title="MA 3 Forecast 4", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
-// plot(ma3Enabled and ma3Forecast ? pma3_5 : na, title="MA 3 Forecast 5", color=color.new(color.green, 0), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
-
-// plot(ma4Enabled and ma4Forecast ? pma4_1 : na, title="MA 4 Forecast 1", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
-// plot(ma4Enabled and ma4Forecast ? pma4_2 : na, title="MA 4 Forecast 2", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
-// plot(ma4Enabled and ma4Forecast ? pma4_3 : na, title="MA 4 Forecast 3", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
-// plot(ma4Enabled and ma4Forecast ? pma4_4 : na, title="MA 4 Forecast 4", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
-// plot(ma4Enabled and ma4Forecast ? pma4_5 : na, title="MA 4 Forecast 5", color=color.new(color.blue, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
-
-// plot(ma5Enabled and ma5Forecast ? pma5_1 : na, title="MA 5 Forecast 1", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=1, show_last=1)
-// plot(ma5Enabled and ma5Forecast ? pma5_2 : na, title="MA 5 Forecast 2", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=2, show_last=1)
-// plot(ma5Enabled and ma5Forecast ? pma5_3 : na, title="MA 5 Forecast 3", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=3, show_last=1)
-// plot(ma5Enabled and ma5Forecast ? pma5_4 : na, title="MA 5 Forecast 4", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=4, show_last=1)
-// plot(ma5Enabled and ma5Forecast ? pma5_5 : na, title="MA 5 Forecast 5", color=color.new(color.yellow, transp), linewidth=2, style=plot.style_circles, offset=5, show_last=1)
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
@@ -181,6 +152,7 @@ fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
 
 
+
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
 //study("DIY: Ben's Risk", overlay=true)
@@ -193,181 +165,181 @@ if (switchShowRisk)
 
 input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
 price01 = if (input == "BTC")
-    19406.6875244427
+    19308.0960712582
 else
     if (input == "ETH")
-        603.37999096949
+        616.633867491332
     else
         if (input == "ADA")
-            0.296716941424062
+            0.296415210327567
         else
             if (input == "DOT")
                 18.6061452513967
             else
                 if (input == "LINK")
-                    12.033983922008
+                    11.872350150714
                 else
                     if (input == "TMC")
                         708607263455.31
 
 price02 = if (input == "BTC")
-    25283.0376261854
+    25138.2294378925
 else
     if (input == "ETH")
-        1097.43666281109
+        1117.22956618879
     else
         if (input == "ADA")
-            0.733036426482319
+            0.732243487506646
         else
             if (input == "DOT")
                 21.1730410245279
             else
                 if (input == "LINK")
-                    14.6928142552779
+                    14.4750567344826
                 else
                     if (input == "TMC")
                         952776341305.753
 
 price03 = if (input == "BTC")
-    34679.1360498775
+    34464.4814733611
 else
     if (input == "ETH")
-        2139.88127361036
+        2177.8996546821
     else
         if (input == "ADA")
-            1.65787143404174
+            1.6556624084972
         else
             if (input == "DOT")
                 26.9322878499194
             else
                 if (input == "LINK")
-                    20.3298421485748
+                    20.0184265944645
                 else
                     if (input == "TMC")
                         952776341305.753
 
 price04 = if (input == "BTC")
-    47472.3342939481
+    47163.8872915469
 else
     if (input == "ETH")
-        3871.96003401361
+        3942.21889696452
     else
         if (input == "ADA")
-            3.19277777777778
+            3.18854583148231
         else
             if (input == "DOT")
                 36.4808342071537
             else
                 if (input == "LINK")
-                    29.6791425654985
+                    29.2335865744415
                 else
                     if (input == "TMC")
                         1345152073732.72
 
 price05 = if (input == "BTC")
-    63582.0921985816
+    63153.4110993284
 else
     if (input == "ETH")
-        6405.12897420516
+        6521.95563603441
     else
         if (input == "ADA")
-            5.4455084478959
+            5.43824732536186
         else
             if (input == "DOT")
                 50.4137931034483
             else
                 if (input == "LINK")
-                    43.3328521013795
+                    42.6832522366975
                 else
                     if (input == "TMC")
                         1881768839350.62
 
 price06 = if (input == "BTC")
-    82942.516722408
+    82371.5357366118
 else
     if (input == "ETH")
-        9846.89410372707
+        10025.974025974
     else
         if (input == "ADA")
-            8.51661706349206
+            8.50506373937677
         else
             if (input == "DOT")
                 69.2906776003453
             else
                 if (input == "LINK")
-                    61.8369062631358
+                    60.9096173733196
                 else
                     if (input == "TMC")
                         2549911268855.37
 
 price07 = if (input == "BTC")
-    105507.606858247
+    104768.733540819
 else
     if (input == "ETH")
-        14301.3951170902
+        14560.4491386382
     else
         if (input == "ADA")
-            12.5105258402602
+            12.4936251783167
         else
             if (input == "DOT")
                 93.6366358192706
             else
                 if (input == "LINK")
-                    85.7129135538954
+                    84.4281949934124
                 else
                     if (input == "TMC")
                         3362267932489.45
 
 price08 = if (input == "BTC")
-    131233.943700465
+    130304.772234273
 else
     if (input == "ETH")
-        19871.6531564726
+        20232.9145728643
     else
         if (input == "ADA")
-            17.5379290939786
+            17.5141169853768
         else
             if (input == "DOT")
                 123.961589846359
             else
                 if (input == "LINK")
-                    115.46942800789
+                    113.738202973497
                 else
                     if (input == "TMC")
                         4308496546119.46
 
 price09 = if (input == "BTC")
-    160087.088915956
+    158943.959023802
 else
     if (input == "ETH")
-        26670.2254740929
+        27154.8053527981
     else
         if (input == "ADA")
-            23.7208526287115
+            23.6888783011163
         else
             if (input == "DOT")
                 160.778135048232
             else
                 if (input == "LINK")
-                    151.61887835703
+                    149.345929100117
                 else
                     if (input == "TMC")
                         5391928209848.14
 
 price10 = if (input == "BTC")
-    183760.627861347
+    182442.351412796
 else
     if (input == "ETH")
-        32645.4963391793
+        33238.795639384
     else
         if (input == "ADA")
-            29.197730829421
+            29.1583229036295
         else
             if (input == "DOT")
                 192.961731207289
             else
                 if (input == "LINK")
-                    183.242029636282
+                    180.495360141405
                 else
                     if (input == "TMC")
                         6610205867215.65
