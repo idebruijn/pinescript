@@ -151,6 +151,27 @@ plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
 fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
 
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+//@version=4
+//study("DIY: 200 MA", overlay=true, resolution="W")
+
+// Amateur switch 8 week SMA
+switch200ma = input(title="On/Off 200 day MA", type=input.bool, defval=true)
+transp200ma = 100
+transp200matext = 100
+if (switch200ma and timeframe.isdaily)
+    transp200ma := 0
+    transp200matext := 0
+
+ma200 = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
+
+plot(ma200, color=color.new(color.purple, transp200ma), title="dailyMMA200", linewidth=3, display=display.all)
+
+var label maLabel200 = na
+maLabel200 := label.new(x=bar_index, y=int(ma200), yloc=yloc.price, style=label.style_label_left, color=color.new(color.purple, 100), text=tostring(ma200, "(2OO MA) - $#"), textcolor=color.new(color.purple, transp200matext))
+label.delete(maLabel200[1])
+
+
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
@@ -174,13 +195,13 @@ else
             0.296415210327567
         else
             if (input == "DOT")
-                18.6061452513967
+                18.0928230578355
             else
                 if (input == "LINK")
                     11.872350150714
                 else
                     if (input == "TMC")
-                        708607263455.31
+                        741395213276.643
 
 price02 = if (input == "BTC")
     25138.2294378925
@@ -192,13 +213,13 @@ else
             0.732243487506646
         else
             if (input == "DOT")
-                21.1730410245279
+                20.7318590186593
             else
                 if (input == "LINK")
                     14.4750567344826
                 else
                     if (input == "TMC")
-                        952776341305.753
+                        994712545835.516
 
 price03 = if (input == "BTC")
     34464.4814733611
@@ -210,13 +231,13 @@ else
             1.6556624084972
         else
             if (input == "DOT")
-                26.9322878499194
+                26.3661173663411
             else
                 if (input == "LINK")
                     20.0184265944645
                 else
                     if (input == "TMC")
-                        952776341305.753
+                        994712545835.516
 
 price04 = if (input == "BTC")
     47163.8872915469
@@ -228,13 +249,13 @@ else
             3.18854583148231
         else
             if (input == "DOT")
-                36.4808342071537
+                35.7059089880009
             else
                 if (input == "LINK")
                     29.2335865744415
                 else
                     if (input == "TMC")
-                        1345152073732.72
+                        1400435428005.94
 
 price05 = if (input == "BTC")
     63153.4110993284
@@ -246,13 +267,13 @@ else
             5.43824732536186
         else
             if (input == "DOT")
-                50.4137931034483
+                49.3435848149928
             else
                 if (input == "LINK")
                     42.6832522366975
                 else
                     if (input == "TMC")
-                        1881768839350.62
+                        1954096618961.32
 
 price06 = if (input == "BTC")
     82371.5357366118
@@ -264,13 +285,13 @@ else
             8.50506373937677
         else
             if (input == "DOT")
-                69.2906776003453
+                67.8195173137461
             else
                 if (input == "LINK")
                     60.9096173733196
                 else
                     if (input == "TMC")
-                        2549911268855.37
+                        2651734215181.11
 
 price07 = if (input == "BTC")
     104768.733540819
@@ -282,13 +303,13 @@ else
             12.4936251783167
         else
             if (input == "DOT")
-                93.6366358192706
+                91.6488142819078
             else
                 if (input == "LINK")
                     84.4281949934124
                 else
                     if (input == "TMC")
-                        3362267932489.45
+                        3492036919735.77
 
 price08 = if (input == "BTC")
     130304.772234273
@@ -300,13 +321,13 @@ else
             17.5141169853768
         else
             if (input == "DOT")
-                123.961589846359
+                121.330380577428
             else
                 if (input == "LINK")
                     113.738202973497
                 else
                     if (input == "TMC")
-                        4308496546119.46
+                        4474257529646.34
 
 price09 = if (input == "BTC")
     158943.959023802
@@ -318,13 +339,13 @@ else
             23.6888783011163
         else
             if (input == "DOT")
-                160.778135048232
+                157.364854215918
             else
                 if (input == "LINK")
                     149.345929100117
                 else
                     if (input == "TMC")
-                        5391928209848.14
+                        5597303397481.59
 
 price10 = if (input == "BTC")
     182442.351412796
@@ -336,13 +357,13 @@ else
             29.1583229036295
         else
             if (input == "DOT")
-                192.961731207289
+                188.865298840321
             else
                 if (input == "LINK")
                     180.495360141405
                 else
                     if (input == "TMC")
-                        6610205867215.65
+                        6861325156645.78
 
 var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
