@@ -1,8 +1,8 @@
 //@version=4
 study(title="DIY: BMSB, Risk, Corridor", shorttitle="DIY: BMSB(20MA/21EMA), Risk, Corridor", overlay=true)
 
-// Amateur switch 8 week SMA
-switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
+// Amateur switch 5 week SMA
+switch = input(title="On/Off 5 week SMA", type=input.bool, defval=true)
 transp = 100
 if (switch)
     transp := 0
@@ -17,7 +17,7 @@ if (switch50)
 
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
-ma1Length = input(title="", type=input.integer, defval=8, minval=1, group="Moving Average", inline="MA1")
+ma1Length = input(title="", type=input.integer, defval=5, minval=1, group="Moving Average", inline="MA1")
 ma1Resolution = input(title="", type=input.resolution, defval="", group="Moving Average", inline="MA11")
 ma1Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA11")
 ma1Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA11")
@@ -38,14 +38,14 @@ ma3Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Movi
 
 ma4Enabled = input(title="MA 4", type=input.bool, defval=true, group="Moving Average", inline="MA4")
 ma4Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA4")
-ma4Length = input(title="", type=input.integer, defval=50, minval=1, group="Moving Average", inline="MA4")
+ma4Length = input(title="", type=input.integer, defval=100, minval=1, group="Moving Average", inline="MA4")
 ma4Resolution = input(title="", type=input.resolution, defval="", group="Moving Average", inline="MA44")
 ma4Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA44")
 ma4Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA44")
 
 ma5Enabled = input(title="MA 5", type=input.bool, defval=true, group="Moving Average", inline="MA5")
-ma5Type = input("EMA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA5")
-ma5Length = input(title="", type=input.integer, defval=52, minval=1, group="Moving Average", inline="MA5")
+ma5Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA5")
+ma5Length = input(title="", type=input.integer, defval=200, minval=1, group="Moving Average", inline="MA5")
 ma5Resolution = input(title="", type=input.resolution, defval="", group="Moving Average", inline="MA55")
 ma5Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA55")
 ma5Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA55")
@@ -104,7 +104,7 @@ fill(p1, p2, color=color.rgb(255,255,0, 80))
 fill(p4, p5, color=color.rgb(255,255,0, fill50))
 
 var label maLabel8 = na
-maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 100), text=tostring(ma1, "$ # - 8d sma"), textcolor=color.new(color.orange, transp))
+maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 100), text=tostring(ma1, "$ # - 5d sma"), textcolor=color.new(color.orange, transp))
 label.delete(maLabel8[1])
 
 var label maLabel20 = na
@@ -116,11 +116,11 @@ maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.sty
 label.delete(maLabel21[1])
 
 var label maLabel50 = na
-maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 5Od sma"), textcolor=color.new(color.blue, transp50))
+maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 1OOd sma"), textcolor=color.new(color.blue, transp50))
 label.delete(maLabel50[1])
 
 var label maLabel52 = na
-maLabel52 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.style_label_left, color=color.new(color.yellow, 100), text=tostring(ma5, "$ # - 52d ema"), textcolor=color.new(color.yellow, transp50))
+maLabel52 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.style_label_left, color=color.new(color.yellow, 100), text=tostring(ma5, "$ # - 2OOd sma"), textcolor=color.new(color.yellow, transp50))
 label.delete(maLabel52[1])
 
 
@@ -151,27 +151,6 @@ plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
 fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
 
-// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
-//@version=4
-//study("DIY: 200 MA", overlay=true, resolution="W")
-
-// Amateur switch 8 week SMA
-switch200ma = input(title="On/Off 200 day MA", type=input.bool, defval=true)
-transp200ma = 100
-transp200matext = 100
-if (switch200ma and timeframe.isdaily)
-    transp200ma := 0
-    transp200matext := 0
-
-ma200 = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
-
-plot(ma200, color=color.new(color.purple, transp200ma), title="dailyMMA200", linewidth=3, display=display.all)
-
-var label maLabel200 = na
-maLabel200 := label.new(x=bar_index, y=int(ma200), yloc=yloc.price, style=label.style_label_left, color=color.new(color.purple, 100), text=tostring(ma200, "(2OO MA) - $#"), textcolor=color.new(color.purple, transp200matext))
-label.delete(maLabel200[1])
-
-
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
@@ -179,7 +158,7 @@ label.delete(maLabel200[1])
 //study("DIY: Ben's Risk", overlay=true)
 
 // Amateur switch show Ben's Risk
-switchShowRisk = input(title="On/Off Ben's Risk", type=input.bool, defval=true)
+switchShowRisk = input(title="On/Off Ben's Risk", type=input.bool, defval=false)
 showRisk = 100
 if (switchShowRisk)
     showRisk := 0
@@ -195,13 +174,13 @@ else
             0.296415210327567
         else
             if (input == "DOT")
-                18.0928230578355
+                18.6061452513967
             else
                 if (input == "LINK")
                     11.872350150714
                 else
                     if (input == "TMC")
-                        741395213276.643
+                        708607263455.31
 
 price02 = if (input == "BTC")
     25138.2294378925
@@ -213,13 +192,13 @@ else
             0.732243487506646
         else
             if (input == "DOT")
-                20.7318590186593
+                21.1730410245279
             else
                 if (input == "LINK")
                     14.4750567344826
                 else
                     if (input == "TMC")
-                        994712545835.516
+                        952776341305.753
 
 price03 = if (input == "BTC")
     34464.4814733611
@@ -231,13 +210,13 @@ else
             1.6556624084972
         else
             if (input == "DOT")
-                26.3661173663411
+                26.9322878499194
             else
                 if (input == "LINK")
                     20.0184265944645
                 else
                     if (input == "TMC")
-                        994712545835.516
+                        952776341305.753
 
 price04 = if (input == "BTC")
     47163.8872915469
@@ -249,13 +228,13 @@ else
             3.18854583148231
         else
             if (input == "DOT")
-                35.7059089880009
+                36.4808342071537
             else
                 if (input == "LINK")
                     29.2335865744415
                 else
                     if (input == "TMC")
-                        1400435428005.94
+                        1345152073732.72
 
 price05 = if (input == "BTC")
     63153.4110993284
@@ -267,13 +246,13 @@ else
             5.43824732536186
         else
             if (input == "DOT")
-                49.3435848149928
+                50.4137931034483
             else
                 if (input == "LINK")
                     42.6832522366975
                 else
                     if (input == "TMC")
-                        1954096618961.32
+                        1881768839350.62
 
 price06 = if (input == "BTC")
     82371.5357366118
@@ -285,13 +264,13 @@ else
             8.50506373937677
         else
             if (input == "DOT")
-                67.8195173137461
+                69.2906776003453
             else
                 if (input == "LINK")
                     60.9096173733196
                 else
                     if (input == "TMC")
-                        2651734215181.11
+                        2549911268855.37
 
 price07 = if (input == "BTC")
     104768.733540819
@@ -303,13 +282,13 @@ else
             12.4936251783167
         else
             if (input == "DOT")
-                91.6488142819078
+                93.6366358192706
             else
                 if (input == "LINK")
                     84.4281949934124
                 else
                     if (input == "TMC")
-                        3492036919735.77
+                        3362267932489.45
 
 price08 = if (input == "BTC")
     130304.772234273
@@ -321,13 +300,13 @@ else
             17.5141169853768
         else
             if (input == "DOT")
-                121.330380577428
+                123.961589846359
             else
                 if (input == "LINK")
                     113.738202973497
                 else
                     if (input == "TMC")
-                        4474257529646.34
+                        4308496546119.46
 
 price09 = if (input == "BTC")
     158943.959023802
@@ -339,13 +318,13 @@ else
             23.6888783011163
         else
             if (input == "DOT")
-                157.364854215918
+                160.778135048232
             else
                 if (input == "LINK")
                     149.345929100117
                 else
                     if (input == "TMC")
-                        5597303397481.59
+                        5391928209848.14
 
 price10 = if (input == "BTC")
     182442.351412796
@@ -357,13 +336,13 @@ else
             29.1583229036295
         else
             if (input == "DOT")
-                188.865298840321
+                192.961731207289
             else
                 if (input == "LINK")
                     180.495360141405
                 else
                     if (input == "TMC")
-                        6861325156645.78
+                        6610205867215.65
 
 var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
