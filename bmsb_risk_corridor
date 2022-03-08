@@ -7,13 +7,13 @@ transp = 100
 if (switch)
     transp := 0
     
-// Amateur switch 50 week SMA
-switch50 = input(title="On/Off 50 week SMA", type=input.bool, defval=false)
-transp50 = 100
-fill50 = 100
-if (switch50)
-    transp50 := 0
-    fill50 := 80
+// Amateur switch 100/200 week SMA
+switch100200 = input(title="On/Off 100/200 week SMA", type=input.bool, defval=false)
+transp100200 = 100
+fill100200 = 100
+if (switch100200)
+    transp100200 := 0
+    fill100200 := 80
 
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
@@ -96,12 +96,12 @@ pma5_4 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Le
 pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 5))
 
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
-p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp50), linewidth=2)
-p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp50), linewidth=2)
+p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp100200), linewidth=2)
+p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp100200), linewidth=2)
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
 p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, 0), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
-fill(p4, p5, color=color.rgb(255,255,0, fill50))
+fill(p4, p5, color=color.rgb(255,255,0, fill100200))
 
 var label maLabel8 = na
 maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 100), text=tostring(ma1, "$ # - 5d sma"), textcolor=color.new(color.orange, transp))
@@ -115,13 +115,13 @@ var label maLabel21 = na
 maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 100), text=tostring(ma3, "$ # - 21d ema"), textcolor=color.new(color.green, 0))
 label.delete(maLabel21[1])
 
-var label maLabel50 = na
-maLabel50 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 1OOd sma"), textcolor=color.new(color.blue, transp50))
-label.delete(maLabel50[1])
+var label maLabel100 = na
+maLabel100 := label.new(x=bar_index, y=int(ma4), yloc=yloc.price, style=label.style_label_left, color=color.new(color.blue, 100), text=tostring(ma4, "$ # - 1OOd sma"), textcolor=color.new(color.blue, transp100200))
+label.delete(maLabel100[1])
 
-var label maLabel52 = na
-maLabel52 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.style_label_left, color=color.new(color.yellow, 100), text=tostring(ma5, "$ # - 2OOd sma"), textcolor=color.new(color.yellow, transp50))
-label.delete(maLabel52[1])
+var label maLabel200 = na
+maLabel200 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.style_label_left, color=color.new(color.yellow, 100), text=tostring(ma5, "$ # - 2OOd sma"), textcolor=color.new(color.yellow, transp100200))
+label.delete(maLabel200[1])
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
