@@ -77,14 +77,14 @@ rsiMFIMultiplier = input(175, title = 'MFI Area multiplier', type = input.float)
 rsiMFIPosY = input(2.5, title = 'MFI Area Y Pos', type = input.float)
 
 // RSI
-rsiShow = input(false, title = 'Show RSI', type = input.bool)
+rsiShow = input(true, title = 'Show RSI', type = input.bool)
 rsiSRC = input(close, title = 'RSI Source', type = input.source)
 rsiLen = input(14, title = 'RSI Length', type = input.integer)
 rsiOversold = input(30, title = 'RSI Oversold', minval = 50, maxval = 100, type = input.integer)
 rsiOverbought = input(60, title = 'RSI Overbought', minval = 0, maxval = 50, type = input.integer)
 
 // Divergence RSI
-rsiShowDiv = input(false, title = 'Show RSI Regular Divergences', type = input.bool)
+rsiShowDiv = input(true, title = 'Show RSI Regular Divergences', type = input.bool)
 rsiShowHiddenDiv = input(false, title = 'Show RSI Hidden Divergences', type = input.bool)
 rsiDivOBLevel = input(60, title = 'RSI Bearish Divergence min', type = input.integer)
 rsiDivOSLevel = input(30, title = 'RSI Bullish Divergence min', type = input.integer)
@@ -359,7 +359,6 @@ rsiBullDivColor = (rsiShowDiv and rsiBullDiv) or (rsiShowHiddenDiv and rsiBullDi
 stochBearDivColor = (stochShowDiv and stochBearDiv) or (stochShowHiddenDiv and stochBearDivHidden) ? colorRed : na
 stochBullDivColor = (stochShowDiv and stochBullDiv) or (stochShowHiddenDiv and stochBullDivHidden) ? colorGreen : na
 
-
 // Small Circles WT Cross
 signalColor = wt2 - wt1 > 0 ? color.red : color.lime
 
@@ -435,10 +434,19 @@ plot(series = rsiFractalTop ? rsi[2] : na, title='RSI Bearish Divergence', color
 plot(series = rsiFractalBot ? rsi[2] : na, title='RSI Bullish Divergence', color = rsiBullDivColor, linewidth = 1, offset = -2)
 
 // Stochastic RSI
-stochKplot = plot(stochShow ? stochK : na, title = 'Stoch K', color = color.new(#21baf3, 0), linewidth = 2)
-stochDplot = plot(stochShow ? stochD : na, title = 'Stoch D', color = color.new(#673ab7, 60), linewidth = 1)
+stochKplot = plot(stochShow ? stochK : na, title = 'Stoch K', color = color.new(#2962FF, 0), linewidth = 2)
+stochDplot = plot(stochShow ? stochD : na, title = 'Stoch D', color = color.new(#FF6D00, 0), linewidth = 1)
 stochFillColor = stochK >= stochD ? color.new(#21baf3, 75) : color.new(#673ab7, 60)
 fill(stochKplot, stochDplot, title='KD Fill', color=stochFillColor)
+
+// Stock RSI
+h0 = hline(80, "Upper Band", color=#787B86)
+h1 = hline(20, "Lower Band", color=#787B86)
+fill(h0, h1, color=color.rgb(33, 150, 243, 90), title="Background")
+// RSI
+h2 = hline(70, "Upper Band", color=#787B86)
+h3 = hline(30, "Lower Band", color=#787B86)
+
 
 // Stoch Div
 plot(series = stochFractalTop ? stochK[2] : na, title='Stoch Bearish Divergence', color = stochBearDivColor, linewidth = 1, offset = -2)
@@ -478,7 +486,6 @@ plotchar(wtDivShow and sellSignalDiv ? 106 : na, title = 'Divergence sell circle
 plotchar(wtGoldBuy and wtGoldShow ? -106 : na, title = 'Gold  buy gold circle', char='•', color = colorOrange, location = location.absolute, size = size.small, offset = -2, transp = 15)
 
 // } DRAW
-
 
 // ALERTS {
   
