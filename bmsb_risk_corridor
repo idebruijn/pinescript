@@ -14,6 +14,25 @@ fill100200 = 100
 if (switch100200)
     transp100200 := 0
     fill100200 := 80
+    
+// Amateur switch show Ben's Risk
+switchCowenCorridor = input(title="On/Off Cowen Corridor", type=input.bool, defval=true)
+showCowenCorridor = 100
+fillCowenCorridor = 100
+if (switchCowenCorridor and timeframe.isweekly)
+    showCowenCorridor := 0
+    fillCowenCorridor := 90    
+
+// Amateur switch EMA Ribbon
+switchEMARibbon = input(title="On/Off EMA Ribbon", type=input.bool, defval=false)
+transpEMARibbon = 100
+if (switchEMARibbon)
+    transpEMARibbon := 0
+    
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MA
 
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
@@ -124,6 +143,8 @@ maLabel200 := label.new(x=bar_index, y=int(ma5), yloc=yloc.price, style=label.st
 label.delete(maLabel200[1])
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //@version=4
 //study(title="DIY: 20-50-100-200-300 SMA Daily", shorttitle="DIY: SMA Lines Weekly", overlay=true)
 //ma20 = security(syminfo.tickerid, "W", sma(close, 20), barmerge.gaps_on)
@@ -143,17 +164,11 @@ maLabel300 := label.new(x=bar_index, y=int(ma300), yloc=yloc.price, style=label.
 label.delete(maLabel300[1])
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
 //study("DIY: The Cowen Corridor", overlay=true, resolution="W")
-
-// Amateur switch show Ben's Risk
-switchCowenCorridor = input(title="On/Off Cowen Corridor", type=input.bool, defval=true)
-showCowenCorridor = 100
-fillCowenCorridor = 100
-if (switchCowenCorridor and timeframe.isweekly)
-    showCowenCorridor := 0
-    fillCowenCorridor := 90
 
 // Days X-Axis Value
 
@@ -169,6 +184,33 @@ plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
 plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
 fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//@version=4
+//study(title="EMA Ribbon [Krypt]", shorttitle="EMA Ribbon", overlay=true)
+
+dropn(src, n) =>
+    na(src[n]) ? na : src
+
+length1 = input(20, title="MA-1 period", minval=1)
+length2 = input(25, title="MA-2 period", minval=1)
+length3 = input(30, title="MA-3 period", minval=1)
+length4 = input(35, title="MA-4 period", minval=1)
+length5 = input(40, title="MA-5 period", minval=1)
+length6 = input(45, title="MA-6 period", minval=1)
+length7 = input(50, title="MA-7 period", minval=1)
+length8 = input(55, title="MA-8 period", minval=1)
+dropCandles = input(1, minval=0, title="Drop first N candles")
+
+plot(ema(dropn(close, dropCandles), length1), title="MA-1", color=color.rgb(245, 235, 93, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length2), title="MA-2", color=color.rgb(245, 183, 113, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length3), title="MA-3", color=color.rgb(245, 176, 86, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length4), title="MA-4", color=color.rgb(245, 123, 78, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length5), title="MA-5", color=color.rgb(245, 109, 88, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length6), title="MA-6", color=color.rgb(245, 125, 81, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245, 81, 81, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
