@@ -147,13 +147,17 @@ label.delete(maLabel200[1])
 
 //@version=4
 //study(title="DIY: 20-50-100-200-300 SMA Daily", shorttitle="DIY: SMA Lines Weekly", overlay=true)
-//ma20 = security(syminfo.tickerid, "W", sma(close, 20), barmerge.gaps_on)
+
+ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
-//plot( ma20, color=color.new(color.yellow, 10), title="weeklyMMA20", linewidth=3)
+plot( ma100d, color=color.new(color.gray, 10), title="dailyMMA100", linewidth=3)
 plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
 
+var label maLabel100d = na
+maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 100d sma (daily)"), textcolor=color.new(color.gray, transp100200))
+label.delete(maLabel100d[1])
 
 var label maLabel50 = na
 maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.white, transp100200))
