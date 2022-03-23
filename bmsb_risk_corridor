@@ -2,13 +2,13 @@
 study(title="DIY: BMSB, Risk, Corridor", shorttitle="DIY: BMSB(20MA/21EMA), Risk, Corridor", overlay=true)
 
 // Amateur switch 5 week SMA
-switch = input(title="On/Off 5 week SMA", type=input.bool, defval=true)
+switch = input(title="On/Off 8 week SMA", type=input.bool, defval=true)
 transp = 100
 if (switch)
     transp := 0
     
 // Amateur switch 100/200 week SMA
-switch100200 = input(title="On/Off 100/200 week SMA", type=input.bool, defval=false)
+switch100200 = input(title="On/Off 100/200 week SMA", type=input.bool, defval=true)
 transp100200 = 100
 fill100200 = 100
 if (switch100200)
@@ -36,7 +36,7 @@ if (switchEMARibbon)
 
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
-ma1Length = input(title="", type=input.integer, defval=5, minval=1, group="Moving Average", inline="MA1")
+ma1Length = input(title="", type=input.integer, defval=8, minval=1, group="Moving Average", inline="MA1")
 ma1Resolution = input(title="", type=input.resolution, defval="", group="Moving Average", inline="MA11")
 ma1Source = input(title="", type=input.source, defval=close, group="Moving Average", inline="MA11")
 ma1Forecast = input(title=" Forecast", type=input.bool, defval=true, group="Moving Average", inline="MA11")
@@ -120,7 +120,7 @@ p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, tra
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
 p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, 0), linewidth=2)
 fill(p1, p2, color=color.rgb(255,255,0, 80))
-fill(p4, p5, color=color.rgb(255,255,0, fill100200))
+//fill(p4, p5, color=color.rgb(255,255,0, fill100200))
 
 var label maLabel8 = na
 maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.style_label_left, color=color.new(color.orange, 100), text=tostring(ma1, "$ # - 5d sma"), textcolor=color.new(color.orange, transp))
@@ -156,7 +156,7 @@ plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
 
 var label maLabel100d = na
-maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 100d sma (daily)"), textcolor=color.new(color.gray, transp100200))
+maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 1OOd sma (daily)"), textcolor=color.new(color.gray, transp100200))
 label.delete(maLabel100d[1])
 
 var label maLabel50 = na
