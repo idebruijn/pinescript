@@ -217,6 +217,7 @@ plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245,
 plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
 
 
+
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
 //study("DIY: Ben's Risk", overlay=true)
@@ -408,6 +409,21 @@ else
                     if (input == "TMC")
                         6846185594461.46
 
+bepPrice = if (input == "BTC")
+    26680
+else
+    if (input == "ETH")
+        1396
+    else
+        if (input == "ADA")
+            0.57
+        else
+            if (input == "DOT")
+                22.77
+            else
+                if (input == "LINK")
+                    22.71
+
 var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label01 = label.new(bar_index, price01, text=labelText01)
@@ -487,3 +503,11 @@ label.set_x(label10, 0)
 label.set_color(label10, color.new(color.red, showRisk))
 label.set_xloc(label10, time, xloc.bar_time)
 label.set_style(label10, label.style_label_left)
+
+var bepText = "" + tostring(bepPrice, "$ #.##")
+plot(bepPrice, title='Line', color=color.new(color.orange, showRisk), linewidth=2)
+var bepLabel = label.new(bar_index, bepPrice, text=bepText)
+label.set_x(bepLabel, 0)
+label.set_color(bepLabel, color.new(color.orange, showRisk))
+label.set_xloc(bepLabel, time, xloc.bar_time)
+label.set_style(bepLabel, label.style_label_left)
