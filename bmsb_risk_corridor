@@ -158,7 +158,7 @@ plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
 
 var label maLabel100d = na
-maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 12OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
+maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
 label.delete(maLabel100d[1])
 
 var label maLabel200d = na
