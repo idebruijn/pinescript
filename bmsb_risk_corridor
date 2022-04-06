@@ -223,7 +223,6 @@ plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245,
 plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
 
 
-
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
 //study("DIY: Ben's Risk", overlay=true)
@@ -236,10 +235,10 @@ if (switchShowRisk)
 
 input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
 price01 = if (input == "BTC")
-    18851.9651322832
+    18453.9521392313
 else
     if (input == "ETH")
-        631.334152997271
+        643.894503469523
     else
         if (input == "ADA")
             0.293654632758314
@@ -254,10 +253,10 @@ else
                         741532809295.967
 
 price02 = if (input == "BTC")
-    24520.4739763012
+    23987.423618019
 else
     if (input == "ETH")
-        1139.5996583355
+        1159.17928965594
     else
         if (input == "ADA")
             0.722778350515464
@@ -272,10 +271,10 @@ else
                         994228758169.935
 
 price03 = if (input == "BTC")
-    33590.928679164
+    32836.8816530996
 else
     if (input == "ETH")
-        2222.71897143692
+        2263.68903557022
     else
         if (input == "ADA")
             1.63572994614175
@@ -290,10 +289,10 @@ else
                         994228758169.935
 
 price04 = if (input == "BTC")
-    45939.4656276092
+    44883.9673913044
 else
     if (input == "ETH")
-        4023.07092751364
+        4096.31620199306
     else
         if (input == "ADA")
             3.15012164553229
@@ -308,10 +307,10 @@ else
                         1398962098044.67
 
 price05 = if (input == "BTC")
-    61488.6947584789
+    60052.5608732158
 else
     if (input == "ETH")
-        6656.30134862812
+        6776.45407765477
     else
         if (input == "ADA")
             5.37232431868017
@@ -326,10 +325,10 @@ else
                         1951235646530.2
 
 price06 = if (input == "BTC")
-    80175.7305194805
+    78284.8664688427
 else
     if (input == "ETH")
-        10234.1999836481
+        10418.3329219123
     else
         if (input == "ADA")
             8.40209717607973
@@ -344,10 +343,10 @@ else
                         2647135176651.31
 
 price07 = if (input == "BTC")
-    101955.11627907
+    99532.9695316053
 else
     if (input == "ETH")
-        14861.1197190373
+        15129.7259983008
     else
         if (input == "ADA")
             12.3420024853542
@@ -362,10 +361,10 @@ else
                         3485387673956.26
 
 price08 = if (input == "BTC")
-    126786.898184688
+    123758.408215661
 else
     if (input == "ETH")
-        20649.8264558427
+        21022.5302154493
     else
         if (input == "ADA")
             17.3020558487247
@@ -380,10 +379,10 @@ else
                         4465133095787.05
 
 price09 = if (input == "BTC")
-    154636.550308008
+    150927.958833619
 else
     if (input == "ETH")
-        27714.6621202728
+        28215.7620700537
     else
         if (input == "ADA")
             23.4004143831039
@@ -398,10 +397,10 @@ else
                         5585383794044.37
 
 price10 = if (input == "BTC")
-    177486.418193304
+    173220.234423196
 else
     if (input == "ETH")
-        33923.631884568
+        34536.9066955423
     else
         if (input == "ADA")
             28.8037116895118
@@ -416,19 +415,19 @@ else
                         6846185594461.46
 
 bepPrice = if (input == "BTC")
-    26680
+    26605
 else
     if (input == "ETH")
-        1396
+        1392
     else
         if (input == "ADA")
             0.57
         else
             if (input == "DOT")
-                22.77
+                22.94
             else
                 if (input == "LINK")
-                    22.71
+                    22.63
 
 var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
