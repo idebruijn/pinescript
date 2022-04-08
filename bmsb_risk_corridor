@@ -150,10 +150,12 @@ label.delete(maLabel200[1])
 
 ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
+ma200dtop = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)*2.4
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
 plot( ma100d, color=color.new(color.gray, 10), title="dailyMMA100", linewidth=3)
 plot( ma200d, color=color.new(color.gray, 10), title="dailyMMA200", linewidth=3)
+plot( ma200dtop, color=color.new(color.red, 10), title="dailyMMA200top", linewidth=1)
 plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
 
@@ -164,6 +166,10 @@ label.delete(maLabel100d[1])
 var label maLabel200d = na
 maLabel200d := label.new(x=bar_index, y=int(ma200d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma200d, "$ # - 2OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
 label.delete(maLabel200d[1])
+
+var label maLabel200dtop = na
+maLabel200dtop := label.new(x=bar_index, y=int(ma200dtop), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma200dtop, "$ # - 2OO*2/4 sma (daily)"), textcolor=color.new(color.red, transp100200))
+label.delete(maLabel200dtop[1])
 
 var label maLabel50 = na
 maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.white, transp100200))
