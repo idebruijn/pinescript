@@ -29,6 +29,12 @@ transpEMARibbon = 100
 if (switchEMARibbon)
     transpEMARibbon := 0
     
+// Amateur switch Pi Cycle Top/Bottem
+switchPiCycle = input(title="On/Off Pi Cycle Top/Bottem", type=input.bool, defval=true)
+transpPiCycle = 100
+if (switchPiCycle)
+    transpPiCycle := 0
+    
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -150,12 +156,12 @@ label.delete(maLabel200[1])
 
 ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
-ma200dtop = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)*2.4
+//ma200dtop = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)*2.4
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
 plot( ma100d, color=color.new(color.gray, 10), title="dailyMMA100", linewidth=3)
 plot( ma200d, color=color.new(color.gray, 10), title="dailyMMA200", linewidth=3)
-plot( ma200dtop, color=color.new(color.red, 10), title="dailyMMA200top", linewidth=1)
+//plot( ma200dtop, color=color.new(color.red, 10), title="dailyMMA200top", linewidth=1)
 plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
 
@@ -167,9 +173,9 @@ var label maLabel200d = na
 maLabel200d := label.new(x=bar_index, y=int(ma200d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma200d, "$ # - 2OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
 label.delete(maLabel200d[1])
 
-var label maLabel200dtop = na
-maLabel200dtop := label.new(x=bar_index, y=int(ma200dtop), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma200dtop, "$ # - 2OO*2/4 sma (daily)"), textcolor=color.new(color.red, transp100200))
-label.delete(maLabel200dtop[1])
+// var label maLabel200dtop = na
+// maLabel200dtop := label.new(x=bar_index, y=int(ma200dtop), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma200dtop, "$ # - 2OO*2/4 sma (daily)"), textcolor=color.new(color.red, transp100200))
+// label.delete(maLabel200dtop[1])
 
 var label maLabel50 = na
 maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.white, transp100200))
@@ -188,17 +194,17 @@ label.delete(maLabel300[1])
 
 // Days X-Axis Value
 
-start = time == timestamp(2010,7,18,0,0) // First BLX Bitcoin Date
-days = security("BNC:BLX", "D", barssince(start))
-c=sma(close, 20)
+// start = time == timestamp(2010,7,18,0,0) // First BLX Bitcoin Date
+// days = security("BNC:BLX", "D", barssince(start))
+// c=sma(close, 20)
 
-pi=3.1415926535
-y1 = c*(16*pi*pi)/sqrt(days)
-y2 = c/100*sqrt(days)
+// pi=3.1415926535
+// y1 = c*(16*pi*pi)/sqrt(days)
+// y2 = c/100*sqrt(days)
 
-plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
-plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
-fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
+// plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
+// plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
+// fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -230,6 +236,93 @@ plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170,
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+
+//@version=4
+//study("Pi Cycle Bitcoin High/Low", shorttitle="Pi Cycle Bitcoin High/Low", overlay=true)
+
+//Create Inputs for the 4 MAs, and Visual 
+
+lowma_long = input(471, minval=1, title="BTC Low - Long SMA")
+is_show_lowma1 = input(true, type=input.bool, title="Show Low Long SMA?")
+
+lowema_short = input(150, minval=1, title="BTC Low - Short EMA")
+is_show_lowma2 = input(true, type=input.bool, title="Show Low Short EMA?")
+
+hima_long = input(350, minval=1, title="BTC High - Long SMA")
+is_show_hima1 = input(true, type=input.bool, title="Show High Long SMA?")
+
+hima_short = input(111, minval=1, title="BTC High - Short SMA")
+is_show_hima2 = input(true, type=input.bool, title="Show High Short SMA?")
+
+//Set resolution to the Daily Chart
+resolution = input('D', type=input.string, title="Time interval")
+
+//Run the math for the 4 MAs
+ma_long_low = security(syminfo.tickerid, resolution, sma(close, lowma_long)*745)/1000
+ema_short_low = security(syminfo.tickerid, resolution, ema(close, lowema_short))
+ma_long_hi = security(syminfo.tickerid, resolution, sma(close, hima_long)*2)
+ma_short_hi = security(syminfo.tickerid, resolution, sma(close, hima_short))
+
+//Set SRC
+src = security(syminfo.tickerid, resolution, close)
+
+//Plot the 4 MAs
+plot(is_show_lowma1?ma_long_low:na, color=color.new(color.red, transpPiCycle), linewidth=2, title="Low Long MA")
+var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.red, transpPiCycle), text = "BTC Low - Long SMA")
+label.set_xy(lowma_long_label, x = bar_index, y = ma_long_low)
+
+plot(is_show_lowma2?ema_short_low:na, color=color.new(color.green, transpPiCycle), linewidth=2, title="Low Short EMA")
+var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.green, transpPiCycle), text = "BTC Low - Short EMA")
+label.set_xy(lowema_short_label, x = bar_index, y = ema_short_low)
+
+plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpPiCycle), linewidth=2, title="High Long MA")
+var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.white, transpPiCycle), text = "BTC High - Long MA")
+label.set_xy(hima_long_label, x = bar_index, y = ma_long_hi)
+
+plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpPiCycle), linewidth=2, title="High Short MA")
+var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.yellow, transpPiCycle), text = "BTC High - Short MA")
+label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
+
+//Find where the MAs cross each other
+PiCycleLow = crossunder(ema_short_low, ma_long_low) ? src + (src/100 * 10) : na
+PiCycleHi = crossunder(ma_long_hi, ma_short_hi) ? src + (src/100 * 10) : na
+
+//Create Labels
+plotshape(PiCycleLow, text="Pi Cycle Low", color=color.navy, textcolor=color.new(color.white, transpPiCycle), style=shape.labelup,size=size.normal, location=location.belowbar, title="Cycle Low")
+plotshape(PiCycleHi, text="Pi Cycle High", color=color.teal, textcolor=color.new(color.white, transpPiCycle), style=shape.labeldown,size=size.normal, location=location.abovebar, title="Cycle High")
+
+//Generate vertical lines at the BTC Halving Dates
+isDate(y, m, d) =>
+    val = timestamp(y,m,d)
+    if val <= time and val > time[1]
+        true
+    else 
+        false
+
+// First Halving
+if isDate(2012, 11, 28)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    label.new(bar_index, low, text="1st Halving - Nov 28, 2012", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)
+    
+// Second Halving
+if isDate(2016, 7, 9)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    label.new(bar_index, low, text="2nd Halving - Jul 9, 2016", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)
+    
+// Third Halving
+if isDate(2020, 5, 11)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    label.new(bar_index, low, text="3rd Halving - May 11, 2020", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
+         
+// Fourth Halving
+if isDate(2024, 4, 2)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
+ 
+
+
+
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 //@version=4
 //study("DIY: Ben's Risk", overlay=true)
 
@@ -241,201 +334,201 @@ if (switchShowRisk)
 
 input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
 price01 = if (input == "BTC")
-    18453.9521392313
+    15500
 else
     if (input == "ETH")
-        643.894503469523
+        511
     else
         if (input == "ADA")
-            0.293654632758314
+            0.280854397910643
         else
             if (input == "DOT")
-                16.0544101454228
+                9.51242547890529
             else
                 if (input == "LINK")
-                    11.5336842938569
+                    7.47867557715674
                 else
                     if (input == "TMC")
-                        741532809295.967
+                        710598565832
 
 price02 = if (input == "BTC")
-    23987.423618019
+    17542
 else
     if (input == "ETH")
-        1159.17928965594
+        719
     else
         if (input == "ADA")
-            0.722778350515464
+            0.684398710637243
         else
             if (input == "DOT")
-                18.6255841343414
+                11.7453990849009
             else
                 if (input == "LINK")
-                    13.9085529293
+                    9.52116635611781
                 else
                     if (input == "TMC")
-                        994228758169.935
+                        948149957259
 
 price03 = if (input == "BTC")
-    32836.8816530996
+    22730
 else
     if (input == "ETH")
-        2263.68903557022
+        1011
     else
         if (input == "ADA")
-            1.63572994614175
+            1.54705799681439
         else
             if (input == "DOT")
-                24.0756760739813
+                16.7611766982775
             else
                 if (input == "LINK")
-                    19.2589610204518
+                    14.1095054192102
                 else
                     if (input == "TMC")
-                        994228758169.935
+                        948149957259
 
 price04 = if (input == "BTC")
-    44883.9673913044
+    31022
 else
     if (input == "ETH")
-        4096.31620199306
+        1422
     else
         if (input == "ADA")
-            3.15012164553229
+            2.98052948832112
         else
             if (input == "DOT")
-                33.129710388013
+                25.0805403733113
             else
                 if (input == "LINK")
-                    28.1144578313253
+                    21.745204721505
                 else
                     if (input == "TMC")
-                        1398962098044.67
+                        1329470848742
 
 price05 = if (input == "BTC")
-    60052.5608732158
+    42313
 else
     if (input == "ETH")
-        6776.45407765477
+        1999
     else
         if (input == "ADA")
-            5.37232431868017
+            5.08474828716115
         else
             if (input == "DOT")
-                46.3464762496119
+                37.2341491341062
             else
                 if (input == "LINK")
-                    41.0493732803424
+                    32.8908150064683
                 else
                     if (input == "TMC")
-                        1951235646530.2
+                        1848231492361
 
 price06 = if (input == "BTC")
-    78284.8664688427
+    56530
 else
     if (input == "ETH")
-        10418.3329219123
+        2811
     else
         if (input == "ADA")
-            8.40209717607973
+            7.95218525766471
         else
             if (input == "DOT")
-                64.2508703665779
+                53.6998127340824
             else
                 if (input == "LINK")
-                    58.5811863391252
+                    47.9986315429353
                 else
                     if (input == "TMC")
-                        2647135176651.31
+                        2502322863403
 
 price07 = if (input == "BTC")
-    99532.9695316053
+    73617
 else
     if (input == "ETH")
-        15129.7259983008
+        3953
     else
         if (input == "ADA")
-            12.3420024853542
+            11.6813127090301
         else
             if (input == "DOT")
-                87.3429976702045
+                74.9377219985792
             else
                 if (input == "LINK")
-                    81.1990352881442
+                    67.4950884086444
                 else
                     if (input == "TMC")
-                        3485387673956.26
+                        3290792600135
 
 price08 = if (input == "BTC")
-    123758.408215661
+    93530
 else
     if (input == "ETH")
-        21022.5302154493
+        5559
     else
         if (input == "ADA")
-            17.3020558487247
+            16.3757651208632
         else
             if (input == "DOT")
-                116.107609041706
+                101.399122807018
             else
                 if (input == "LINK")
-                    109.38859457775
+                    91.7935190144617
                 else
                     if (input == "TMC")
-                        4465133095787.05
+                        4211977771162
 
 price09 = if (input == "BTC")
-    150927.958833619
+    116234
 else
     if (input == "ETH")
-        28215.7620700537
+        7816
     else
         if (input == "ADA")
-            23.4004143831039
+            22.148037216416
         else
             if (input == "DOT")
-                151.030986993114
+                133.53143659993
             else
                 if (input == "LINK")
-                    143.634493078938
+                    121.316639741519
                 else
                     if (input == "TMC")
-                        5585383794044.37
+                        5265381606883
 
 price10 = if (input == "BTC")
-    173220.234423196
+    135075
 else
     if (input == "ETH")
-        34536.9066955423
+        10093
     else
         if (input == "ADA")
-            28.8037116895118
+            27.2619638167493
         else
             if (input == "DOT")
-                181.562337662338
+                161.628036638789
             else
                 if (input == "LINK")
                     173.592183517417
                 else
                     if (input == "TMC")
-                        6846185594461.46
+                        6450669335668
 
 bepPrice = if (input == "BTC")
-    26605
+    106407
 else
     if (input == "ETH")
-        1392
+        0
     else
         if (input == "ADA")
-            0.57
+            0
         else
             if (input == "DOT")
-                22.94
+                0
             else
                 if (input == "LINK")
-                    22.63
+                    0
 
-var labelText01 = "0.1"  + tostring(price01, " - $ #.##")
+var labelText01 = "0.0"  + tostring(price01, " - $ #.##")
 plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label01 = label.new(bar_index, price01, text=labelText01)
 label.set_x(label01, 0)
@@ -443,7 +536,7 @@ label.set_color(label01, color.new(color.green, showRisk))
 label.set_xloc(label01, time, xloc.bar_time)
 label.set_style(label01, label.style_label_left)
 
-var labelText02 = "0.2"  + tostring(price02, " - $ #.##")
+var labelText02 = "0.1"  + tostring(price02, " - $ #.##")
 plot(price02, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label02 = label.new(bar_index, price02, text=labelText02)
 label.set_x(label02, 0)
@@ -451,7 +544,7 @@ label.set_color(label02, color.new(color.green, showRisk))
 label.set_xloc(label02, time, xloc.bar_time)
 label.set_style(label02, label.style_label_left)
 
-var labelText03 = "0.3"  + tostring(price03, " - $ #.##")
+var labelText03 = "0.2"  + tostring(price03, " - $ #.##")
 plot(price03, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label03 = label.new(bar_index, price03, text=labelText03)
 label.set_x(label03, 0)
@@ -459,7 +552,7 @@ label.set_color(label03, color.new(color.green, showRisk))
 label.set_xloc(label03, time, xloc.bar_time)
 label.set_style(label03, label.style_label_left)
 
-var labelText04 = "0.4"  + tostring(price04, " - $ #.##")
+var labelText04 = "0.3"  + tostring(price04, " - $ #.##")
 plot(price04, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label04 = label.new(bar_index, price04, text=labelText04)
 label.set_x(label04, 0)
@@ -467,7 +560,7 @@ label.set_color(label04, color.new(color.green, showRisk))
 label.set_xloc(label04, time, xloc.bar_time)
 label.set_style(label04, label.style_label_left)
 
-var labelText05 = "0.5"  + tostring(price05, " - $ #.##")
+var labelText05 = "0.4"  + tostring(price05, " - $ #.##")
 plot(price05, title='Line', color=color.new(color.green, showRisk), linewidth=1)
 var label05 = label.new(bar_index, price05, text=labelText05)
 label.set_x(label05, 0)
@@ -475,7 +568,7 @@ label.set_color(label05, color.new(color.green, showRisk))
 label.set_xloc(label05, time, xloc.bar_time)
 label.set_style(label05, label.style_label_left)
 
-var labelText06 = "0.6"  + tostring(price06, " - $ #.##")
+var labelText06 = "0.5"  + tostring(price06, " - $ #.##")
 plot(price06, title='Line', color=color.new(color.orange, showRisk), linewidth=1)
 var label06 = label.new(bar_index, price06, text=labelText06)
 label.set_x(label06, 0)
@@ -483,7 +576,7 @@ label.set_color(label06, color.new(color.orange, showRisk))
 label.set_xloc(label06, time, xloc.bar_time)
 label.set_style(label06, label.style_label_left)
 
-var labelText07 = "0.7"  + tostring(price07, " - $ #.##")
+var labelText07 = "0.6"  + tostring(price07, " - $ #.##")
 plot(price07, title='Line', color=color.new(color.orange, showRisk), linewidth=1)
 var label07 = label.new(bar_index, price07, text=labelText07)
 label.set_x(label07, 0)
@@ -491,7 +584,7 @@ label.set_color(label07, color.new(color.orange, showRisk))
 label.set_xloc(label07, time, xloc.bar_time)
 label.set_style(label07, label.style_label_left)
 
-var labelText08 = "0.8"  + tostring(price08, " - $ #.##")
+var labelText08 = "0.7"  + tostring(price08, " - $ #.##")
 plot(price08, title='Line', color=color.new(color.red, showRisk), linewidth=1)
 var label08 = label.new(bar_index, price08, text=labelText08)
 label.set_x(label08, 0)
@@ -499,7 +592,7 @@ label.set_color(label08, color.new(color.red, showRisk))
 label.set_xloc(label08, time, xloc.bar_time)
 label.set_style(label08, label.style_label_left)
 
-var labelText09 = "0.9"  + tostring(price09, " - $ #.##")
+var labelText09 = "0.8"  + tostring(price09, " - $ #.##")
 plot(price09, title='Line', color=color.new(color.red, showRisk), linewidth=1)
 var label09 = label.new(bar_index, price09, text=labelText09)
 label.set_x(label09, 0)
@@ -522,3 +615,9 @@ label.set_x(bepLabel, 0)
 label.set_color(bepLabel, color.new(color.orange, 20))
 label.set_xloc(bepLabel, time, xloc.bar_time)
 label.set_style(bepLabel, label.style_label_left)
+
+
+
+
+
+
