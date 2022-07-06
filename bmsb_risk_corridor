@@ -7,8 +7,8 @@ transp = 100
 if (switch)
     transp := 0
     
-// Amateur switch 100/200 week SMA
-switch100200 = input(title="On/Off 100/200 week SMA", type=input.bool, defval=true)
+// Amateur switch SMA kube (100/200/...) week SMA
+switch100200 = input(title="On/Off (100/200/...) week SMA", type=input.bool, defval=true)
 transp100200 = 100
 fill100200 = 100
 if (switch100200)
@@ -159,11 +159,11 @@ ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
 //ma200dtop = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)*2.4
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
-plot( ma100d, color=color.new(color.gray, 10), title="dailyMMA100", linewidth=3)
-plot( ma200d, color=color.new(color.gray, 10), title="dailyMMA200", linewidth=3)
+plot( ma100d, color=color.new(color.gray, transp100200), title="dailyMMA100", linewidth=3)
+plot( ma200d, color=color.new(color.gray, transp100200), title="dailyMMA200", linewidth=3)
 //plot( ma200dtop, color=color.new(color.red, 10), title="dailyMMA200top", linewidth=1)
-plot( ma50, color=color.new(color.white, 10), title="weeklyMMA50", linewidth=3)
-plot( ma300, color=color.new(color.purple, 10), title="weeklyMMA300", linewidth=3)
+plot( ma50, color=color.new(color.white, transp100200), title="weeklyMMA50", linewidth=3)
+plot( ma300, color=color.new(color.purple, transp100200), title="weeklyMMA300", linewidth=3)
 
 var label maLabel100d = na
 maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
@@ -212,27 +212,27 @@ label.delete(maLabel300[1])
 //@version=4
 //study(title="EMA Ribbon [Krypt]", shorttitle="EMA Ribbon", overlay=true)
 
-dropn(src, n) =>
-    na(src[n]) ? na : src
+// dropn(src, n) =>
+//     na(src[n]) ? na : src
 
-length1 = input(20, title="MA-1 period", minval=1)
-length2 = input(25, title="MA-2 period", minval=1)
-length3 = input(30, title="MA-3 period", minval=1)
-length4 = input(35, title="MA-4 period", minval=1)
-length5 = input(40, title="MA-5 period", minval=1)
-length6 = input(45, title="MA-6 period", minval=1)
-length7 = input(50, title="MA-7 period", minval=1)
-length8 = input(55, title="MA-8 period", minval=1)
-dropCandles = input(1, minval=0, title="Drop first N candles")
+// length1 = input(20, title="MA-1 period", minval=1)
+// length2 = input(25, title="MA-2 period", minval=1)
+// length3 = input(30, title="MA-3 period", minval=1)
+// length4 = input(35, title="MA-4 period", minval=1)
+// length5 = input(40, title="MA-5 period", minval=1)
+// length6 = input(45, title="MA-6 period", minval=1)
+// length7 = input(50, title="MA-7 period", minval=1)
+// length8 = input(55, title="MA-8 period", minval=1)
+// dropCandles = input(1, minval=0, title="Drop first N candles")
 
-plot(ema(dropn(close, dropCandles), length1), title="MA-1", color=color.rgb(245, 235, 93, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length2), title="MA-2", color=color.rgb(245, 183, 113, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length3), title="MA-3", color=color.rgb(245, 176, 86, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length4), title="MA-4", color=color.rgb(245, 123, 78, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length5), title="MA-5", color=color.rgb(245, 109, 88, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length6), title="MA-6", color=color.rgb(245, 125, 81, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245, 81, 81, transp=transpEMARibbon), linewidth=1)
-plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length1), title="MA-1", color=color.rgb(245, 235, 93, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length2), title="MA-2", color=color.rgb(245, 183, 113, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length3), title="MA-3", color=color.rgb(245, 176, 86, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length4), title="MA-4", color=color.rgb(245, 123, 78, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length5), title="MA-5", color=color.rgb(245, 109, 88, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length6), title="MA-6", color=color.rgb(245, 125, 81, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245, 81, 81, transp=transpEMARibbon), linewidth=1)
+// plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
@@ -314,10 +314,10 @@ if isDate(2020, 5, 11)
     line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
     label.new(bar_index, low, text="3rd Halving - May 11, 2020", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
          
-// Fourth Halving
-if isDate(2024, 4, 2)
-    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
-    label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
+// // Fourth Halving
+// if isDate(2024, 4, 2)
+//     line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+//     label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
  
 
 
@@ -615,7 +615,6 @@ label.set_x(bepLabel, 0)
 label.set_color(bepLabel, color.new(color.orange, 20))
 label.set_xloc(bepLabel, time, xloc.bar_time)
 label.set_style(bepLabel, label.style_label_left)
-
 
 
 
