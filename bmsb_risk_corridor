@@ -269,10 +269,10 @@ is_show_hima2 = input(true, type=input.bool, title="Show High Short SMA?")
 resolution = input('D', type=input.string, title="Time interval")
 
 //Run the math for the 4 MAs
-ma_long_low = security(syminfo.tickerid, resolution, sma(close, lowma_long)*745)/1000
-ema_short_low = security(syminfo.tickerid, resolution, ema(close, lowema_short))
-ma_long_hi = security(syminfo.tickerid, resolution, sma(close, hima_long)*2)
-ma_short_hi = security(syminfo.tickerid, resolution, sma(close, hima_short))
+ma_long_low = security(syminfo.tickerid, resolution, sma(close, lowma_long)*745, barmerge.gaps_on)/1000
+ema_short_low = security(syminfo.tickerid, resolution, ema(close, lowema_short), barmerge.gaps_on)
+ma_long_hi = security(syminfo.tickerid, resolution, sma(close, hima_long)*2, barmerge.gaps_on)
+ma_short_hi = security(syminfo.tickerid, resolution, sma(close, hima_short), barmerge.gaps_on)
 
 //Set SRC
 src = security(syminfo.tickerid, resolution, close)
@@ -642,10 +642,3 @@ label.set_color(label10, color.new(color.red, showRisk))
 label.set_xloc(label10, time, xloc.bar_time)
 label.set_style(label10, label.style_label_left)
 
-var bepText = "" + tostring(bepPrice, "$ #.##")
-plot(bepPrice, title='Line', color=color.new(color.orange, 0), linewidth=2)
-var bepLabel = label.new(bar_index, bepPrice, text=bepText)
-label.set_x(bepLabel, 0)
-label.set_color(bepLabel, color.new(color.orange, 20))
-label.set_xloc(bepLabel, time, xloc.bar_time)
-label.set_style(bepLabel, label.style_label_left)
