@@ -318,7 +318,30 @@ if isDate(2020, 5, 11)
 // if isDate(2024, 4, 2)
 //     line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
 //     label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
- 
+
+
+//@version = 4
+//study("BTC Puell Multiple")
+
+top1 = input(6.8, type=input.float, step = 0.05)
+top2 = input(11.0, type=input.float, step = 0.05)
+bottom = input(0.5, type=input.float, step = 0.05)
+miningRevenue = security("QUANDL:BCHAIN/MIREV", "D", close[1], barmerge.gaps_off, barmerge.lookahead_on)
+ma365 = security("QUANDL:BCHAIN/MIREV", "D", sma(close, 365)[1], barmerge.gaps_off, barmerge.lookahead_on)
+puellMultiple = miningRevenue / ma365
+
+plot(puellMultiple, color=color.new(color.white, 0))
+//hline(bottom, color=color.new(color.green, 0), linestyle=hline.style_solid, linewidth=1)
+//hline(top1, color=color.new(color.red, 0), linestyle=hline.style_solid, linewidth=1)
+//hline(top2, color=color.new(color.red, 0), linestyle=hline.style_solid, linewidth=2)
+
+//bgcolor(puellMultiple < bottom ? color.new(color.green, 0) : puellMultiple > top1 ? color.new(color.red, 0) : na)
+barcolor(puellMultiple < bottom ? color.new(color.white, 0) : puellMultiple > top1 ? color.new(color.yellow, 0) : na)
+
+alertcondition(puellMultiple > top1, title="BTC Puell Multiple Top", message="BTC Puell Multiple Top Alert! - {{exchange}} : {{ticker}} Be careful, it's time to consider sell! \nCurrent price：{{close}} \nTriggered Time：{{timenow}}")
+alertcondition(puellMultiple < bottom, title="BTC Puell Multiple Bottom", message="BTC Puell Multiple Bottom Alert! - {{exchange}} : {{ticker}} Congratulation! It's a good opportunity to accumulate more coins! \nCurrent price：{{close}} \nTriggered Time：{{timenow}}")
+
+
 
 
 
@@ -337,7 +360,7 @@ price01 = if (input == "BTC")
     15500
 else
     if (input == "ETH")
-        511
+        505
     else
         if (input == "ADA")
             0.280854397910643
@@ -352,10 +375,10 @@ else
                         710598565832
 
 price02 = if (input == "BTC")
-    17542
+    17390
 else
     if (input == "ETH")
-        719
+        710
     else
         if (input == "ADA")
             0.684398710637243
@@ -370,10 +393,10 @@ else
                         948149957259
 
 price03 = if (input == "BTC")
-    22730
+    22518
 else
     if (input == "ETH")
-        1011
+        999
     else
         if (input == "ADA")
             1.54705799681439
@@ -388,10 +411,10 @@ else
                         948149957259
 
 price04 = if (input == "BTC")
-    31022
+    30723
 else
     if (input == "ETH")
-        1422
+        1404
     else
         if (input == "ADA")
             2.98052948832112
@@ -406,10 +429,10 @@ else
                         1329470848742
 
 price05 = if (input == "BTC")
-    42313
+    41893
 else
     if (input == "ETH")
-        1999
+        1974
     else
         if (input == "ADA")
             5.08474828716115
@@ -424,10 +447,10 @@ else
                         1848231492361
 
 price06 = if (input == "BTC")
-    56530
+    55957
 else
     if (input == "ETH")
-        2811
+        2774
     else
         if (input == "ADA")
             7.95218525766471
@@ -442,10 +465,10 @@ else
                         2502322863403
 
 price07 = if (input == "BTC")
-    73617
+    72861
 else
     if (input == "ETH")
-        3953
+        3900
     else
         if (input == "ADA")
             11.6813127090301
@@ -460,10 +483,10 @@ else
                         3290792600135
 
 price08 = if (input == "BTC")
-    93530
+    92563
 else
     if (input == "ETH")
-        5559
+        5482
     else
         if (input == "ADA")
             16.3757651208632
@@ -478,10 +501,10 @@ else
                         4211977771162
 
 price09 = if (input == "BTC")
-    116234
+    115024
 else
     if (input == "ETH")
-        7816
+        7706
     else
         if (input == "ADA")
             22.148037216416
@@ -496,10 +519,10 @@ else
                         5265381606883
 
 price10 = if (input == "BTC")
-    135075
+    133664
 else
     if (input == "ETH")
-        10093
+        9949
     else
         if (input == "ADA")
             27.2619638167493
@@ -514,7 +537,7 @@ else
                         6450669335668
 
 bepPrice = if (input == "BTC")
-    106407
+    72732
 else
     if (input == "ETH")
         0
@@ -615,8 +638,3 @@ label.set_x(bepLabel, 0)
 label.set_color(bepLabel, color.new(color.orange, 20))
 label.set_xloc(bepLabel, time, xloc.bar_time)
 label.set_style(bepLabel, label.style_label_left)
-
-
-
-
-
