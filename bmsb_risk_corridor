@@ -7,13 +7,35 @@ transp = 100
 if (switch)
     transp := 0
     
+// Amateur switch BMSB
+switchBMSB = input(title="On/Off BMSB", type=input.bool, defval=true)
+transpBMSB = 100
+fillBMSB = 100
+if (switchBMSB)
+    transpBMSB := 0
+    fillBMSB := 80
+    
+// Amateur switch 8 week SMA
+switchTopBottem = input(title="On/Off Top/Bottem", type=input.bool, defval=true)
+transpTopBottem = 100
+if (switchTopBottem)
+    transpTopBottem := 0
+    
 // Amateur switch SMA kube (100/200/...) week SMA
-switch100200 = input(title="On/Off (100/200/...) week SMA", type=input.bool, defval=true)
+switch100200 = input(title="On/Off (50/100/200/300) week SMA", type=input.bool, defval=true)
 transp100200 = 100
 fill100200 = 100
 if (switch100200)
     transp100200 := 0
     fill100200 := 80
+    
+// Amateur switch dailyLines (100/200)
+switchDailyLines = input(title="On/Off Daily Lines (100/200)", type=input.bool, defval=false)
+transpDailyLines = 100
+fillDailyLines = 100
+if (switchDailyLines)
+    transpDailyLines := 0
+    fillDailyLines := 80    
     
 // Amateur switch show Ben's Risk
 switchCowenCorridor = input(title="On/Off Cowen Corridor", type=input.bool, defval=true)
@@ -29,12 +51,7 @@ transpEMARibbon = 100
 if (switchEMARibbon)
     transpEMARibbon := 0
     
-// Amateur switch Pi Cycle Top/Bottem
-switchPiCycle = input(title="On/Off Pi Cycle Top/Bottem", type=input.bool, defval=true)
-transpPiCycle = 100
-if (switchPiCycle)
-    transpPiCycle := 0
-    
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -123,9 +140,9 @@ pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Le
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
 p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp100200), linewidth=2)
 p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp100200), linewidth=2)
-p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, 0), linewidth=2)
-p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, 0), linewidth=2)
-fill(p1, p2, color=color.rgb(255,255,0, 80))
+p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, transpBMSB), linewidth=2)
+p2 = plot(ma3Enabled ? ma3 : na, title="MA 3", color=color.new(color.green, transpBMSB), linewidth=2)
+fill(p1, p2, color=color.rgb(255,255,0, fillBMSB))
 //fill(p4, p5, color=color.rgb(255,255,0, fill100200))
 
 var label maLabel8 = na
@@ -133,11 +150,11 @@ maLabel8 := label.new(x=bar_index, y=int(ma1), yloc=yloc.price, style=label.styl
 label.delete(maLabel8[1])
 
 var label maLabel20 = na
-maLabel20 := label.new(x=bar_index, y=int(ma2), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma2, "$ # - 2Od sma"), textcolor=color.new(color.red, 0))
+maLabel20 := label.new(x=bar_index, y=int(ma2), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma2, "$ # - 2Od sma"), textcolor=color.new(color.red, transpBMSB))
 label.delete(maLabel20[1])
 
 var label maLabel21 = na
-maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 100), text=tostring(ma3, "$ # - 21d ema"), textcolor=color.new(color.green, 0))
+maLabel21 := label.new(x=bar_index, y=int(ma3), yloc=yloc.price, style=label.style_label_left, color=color.new(color.green, 100), text=tostring(ma3, "$ # - 21d ema"), textcolor=color.new(color.green, transpBMSB))
 label.delete(maLabel21[1])
 
 var label maLabel100 = na
@@ -156,26 +173,20 @@ label.delete(maLabel200[1])
 
 ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
-//ma200dtop = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)*2.4
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
-plot( ma100d, color=color.new(color.gray, transp100200), title="dailyMMA100", linewidth=3)
-plot( ma200d, color=color.new(color.gray, transp100200), title="dailyMMA200", linewidth=3)
-//plot( ma200dtop, color=color.new(color.red, 10), title="dailyMMA200top", linewidth=1)
+plot( ma100d, color=color.new(color.gray, transpDailyLines), title="dailyMMA100", linewidth=3)
+plot( ma200d, color=color.new(color.gray, transpDailyLines), title="dailyMMA200", linewidth=3)
 plot( ma50, color=color.new(color.white, transp100200), title="weeklyMMA50", linewidth=3)
 plot( ma300, color=color.new(color.purple, transp100200), title="weeklyMMA300", linewidth=3)
 
 var label maLabel100d = na
-maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
+maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transpDailyLines))
 label.delete(maLabel100d[1])
 
 var label maLabel200d = na
-maLabel200d := label.new(x=bar_index, y=int(ma200d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma200d, "$ # - 2OO sma (daily)"), textcolor=color.new(color.gray, transp100200))
+maLabel200d := label.new(x=bar_index, y=int(ma200d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma200d, "$ # - 2OO sma (daily)"), textcolor=color.new(color.gray, transpDailyLines))
 label.delete(maLabel200d[1])
-
-// var label maLabel200dtop = na
-// maLabel200dtop := label.new(x=bar_index, y=int(ma200dtop), yloc=yloc.price, style=label.style_label_left, color=color.new(color.red, 100), text=tostring(ma200dtop, "$ # - 2OO*2/4 sma (daily)"), textcolor=color.new(color.red, transp100200))
-// label.delete(maLabel200dtop[1])
 
 var label maLabel50 = na
 maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.white, transp100200))
@@ -267,20 +278,20 @@ ma_short_hi = security(syminfo.tickerid, resolution, sma(close, hima_short))
 src = security(syminfo.tickerid, resolution, close)
 
 //Plot the 4 MAs
-plot(is_show_lowma1?ma_long_low:na, color=color.new(color.red, transpPiCycle), linewidth=2, title="Low Long MA")
-var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.red, transpPiCycle), text = "BTC Low - Long SMA")
+plot(is_show_lowma1?ma_long_low:na, color=color.new(color.red, transpTopBottem), linewidth=2, title="Low Long MA")
+var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.red, transpTopBottem), text = "BTC Low - Long SMA")
 label.set_xy(lowma_long_label, x = bar_index, y = ma_long_low)
 
-plot(is_show_lowma2?ema_short_low:na, color=color.new(color.green, transpPiCycle), linewidth=2, title="Low Short EMA")
-var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.green, transpPiCycle), text = "BTC Low - Short EMA")
+plot(is_show_lowma2?ema_short_low:na, color=color.new(color.green, transpTopBottem), linewidth=2, title="Low Short EMA")
+var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.green, transpTopBottem), text = "BTC Low - Short EMA")
 label.set_xy(lowema_short_label, x = bar_index, y = ema_short_low)
 
-plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpPiCycle), linewidth=2, title="High Long MA")
-var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.white, transpPiCycle), text = "BTC High - Long MA")
+plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem), linewidth=2, title="High Long MA")
+var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC High - Long MA")
 label.set_xy(hima_long_label, x = bar_index, y = ma_long_hi)
 
-plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpPiCycle), linewidth=2, title="High Short MA")
-var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, 100), style = label.style_label_left, textcolor = color.new(color.yellow, transpPiCycle), text = "BTC High - Short MA")
+plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="High Short MA")
+var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC High - Short MA")
 label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
 
 //Find where the MAs cross each other
@@ -288,8 +299,8 @@ PiCycleLow = crossunder(ema_short_low, ma_long_low) ? src + (src/100 * 10) : na
 PiCycleHi = crossunder(ma_long_hi, ma_short_hi) ? src + (src/100 * 10) : na
 
 //Create Labels
-plotshape(PiCycleLow, text="Pi Cycle Low", color=color.navy, textcolor=color.new(color.white, transpPiCycle), style=shape.labelup,size=size.normal, location=location.belowbar, title="Cycle Low")
-plotshape(PiCycleHi, text="Pi Cycle High", color=color.teal, textcolor=color.new(color.white, transpPiCycle), style=shape.labeldown,size=size.normal, location=location.abovebar, title="Cycle High")
+plotshape(PiCycleLow, text="Pi Cycle Low", color=color.new(color.navy, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labelup,size=size.normal, location=location.belowbar, title="Cycle Low")
+plotshape(PiCycleHi, text="Pi Cycle High", color=color.new(color.teal, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labeldown,size=size.normal, location=location.abovebar, title="Cycle High")
 
 //Generate vertical lines at the BTC Halving Dates
 isDate(y, m, d) =>
@@ -330,7 +341,7 @@ miningRevenue = security("QUANDL:BCHAIN/MIREV", "D", close[1], barmerge.gaps_off
 ma365 = security("QUANDL:BCHAIN/MIREV", "D", sma(close, 365)[1], barmerge.gaps_off, barmerge.lookahead_on)
 puellMultiple = miningRevenue / ma365
 
-plot(puellMultiple, color=color.new(color.white, 0))
+//plot(puellMultiple, color=color.new(color.white, 0))
 //hline(bottom, color=color.new(color.green, 0), linestyle=hline.style_solid, linewidth=1)
 //hline(top1, color=color.new(color.red, 0), linestyle=hline.style_solid, linewidth=1)
 //hline(top2, color=color.new(color.red, 0), linestyle=hline.style_solid, linewidth=2)
@@ -350,7 +361,7 @@ alertcondition(puellMultiple < bottom, title="BTC Puell Multiple Bottom", messag
 //study("DIY: Ben's Risk", overlay=true)
 
 // Amateur switch show Ben's Risk
-switchShowRisk = input(title="On/Off Ben's Risk", type=input.bool, defval=true)
+switchShowRisk = input(title="On/Off Ben's Risk", type=input.bool, defval=false)
 showRisk = 100
 if (switchShowRisk)
     showRisk := 0
