@@ -19,7 +19,7 @@ if (switchBMSB)
 switchTopBottem = input(title="On/Off Top/Bottem", type=input.bool, defval=true)
 transpTopBottem = 100
 if (switchTopBottem)
-    transpTopBottem := 70
+    transpTopBottem := 50
     
 // Amateur switch SMA (50/100/200/300) week SMA
 switch100200 = input(title="On/Off (50/100/200/300) week SMA", type=input.bool, defval=true)
@@ -107,37 +107,37 @@ ma3 = security(syminfo.tickerid, "W", ma(ma3Type, ma3Source, ma3Length), barmerg
 ma4 = security(syminfo.tickerid, "W", ma(ma4Type, ma4Source, ma4Length), barmerge.gaps_on, barmerge.lookahead_on)
 ma5 = security(syminfo.tickerid, "W", ma(ma5Type, ma5Source, ma5Length), barmerge.gaps_on, barmerge.lookahead_on)
 
-pma1_1 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 1))
-pma1_2 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 2))
-pma1_3 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 3))
-pma1_4 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 4))
-pma1_5 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 5))
+// pma1_1 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 1))
+// pma1_2 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 2))
+// pma1_3 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 3))
+// pma1_4 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 4))
+// pma1_5 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 5))
 
-pma2_1 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 1))
-pma2_2 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 2))
-pma2_3 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 3))
-pma2_4 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 4))
-pma2_5 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 5))
+// pma2_1 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 1))
+// pma2_2 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 2))
+// pma2_3 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 3))
+// pma2_4 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 4))
+// pma2_5 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 5))
 
-pma3_1 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 1))
-pma3_2 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 2))
-pma3_3 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 3))
-pma3_4 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 4))
-pma3_5 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 5))
+// pma3_1 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 1))
+// pma3_2 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 2))
+// pma3_3 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 3))
+// pma3_4 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 4))
+// pma3_5 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 5))
 
-pma4_1 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 1))
-pma4_2 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 2))
-pma4_3 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 3))
-pma4_4 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 4))
-pma4_5 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 5))
+// pma4_1 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 1))
+// pma4_2 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 2))
+// pma4_3 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 3))
+// pma4_4 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 4))
+// pma4_5 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 5))
 
-pma5_1 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 1))
-pma5_2 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 2))
-pma5_3 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 3))
-pma5_4 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 4))
-pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 5))
+// pma5_1 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 1))
+// pma5_2 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 2))
+// pma5_3 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 3))
+// pma5_4 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 4))
+// pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 5))
 
-plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=2)
+plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=1)
 p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp100200), linewidth=2)
 p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp100200), linewidth=2)
 p1 = plot(ma2Enabled ? ma2 : na, title="MA 2", color=color.new(color.red, transpBMSB), linewidth=2)
@@ -175,10 +175,10 @@ ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
-plot( ma100d, color=color.new(color.gray, transpDailyLines), title="dailyMMA100", linewidth=3)
-plot( ma200d, color=color.new(color.gray, transpDailyLines), title="dailyMMA200", linewidth=3)
-plot( ma50, color=color.new(color.white, transp100200), title="weeklyMMA50", linewidth=3)
-plot( ma300, color=color.new(color.purple, transp100200), title="weeklyMMA300", linewidth=3)
+plot( ma100d, color=color.new(color.gray, transpDailyLines), title="dailyMMA100", linewidth=1)
+plot( ma200d, color=color.new(color.gray, transpDailyLines), title="dailyMMA200", linewidth=1)
+plot( ma50, color=color.new(color.white, transp100200), title="weeklyMMA50", linewidth=1)
+plot( ma300, color=color.new(color.purple, transp100200), title="weeklyMMA300", linewidth=1)
 
 var label maLabel100d = na
 maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transpDailyLines))
@@ -298,9 +298,13 @@ label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
 PiCycleLow = crossunder(ema_short_low, ma_long_low) ? src + (src/100 * 10) : na
 PiCycleHi = crossunder(ma_long_hi, ma_short_hi) ? src + (src/100 * 10) : na
 
+//Create vertical line
+plot(PiCycleLow, color=color.new(color.white, transpTopBottem), linewidth=1, style = plot.style_histogram)
+var ppch = plot(PiCycleHi, color=color.new(color.white, transpTopBottem), linewidth=1, style = plot.style_histogram)
+
 //Create Labels
-plotshape(PiCycleLow, text="Pi Cycle Low", color=color.new(color.navy, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labelup,size=size.normal, location=location.belowbar, title="Cycle Low")
-plotshape(PiCycleHi, text="Pi Cycle High", color=color.new(color.teal, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labeldown,size=size.normal, location=location.abovebar, title="Cycle High")
+plotshape(PiCycleLow, text="Pi Cycle Low", color=color.new(color.navy, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labelup, size=size.normal, location=location.belowbar, title="Cycle Low")
+plotshape(PiCycleHi, text="Pi Cycle High", color=color.new(color.teal, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labeldown, size=size.normal, location=location.abovebar, title="Cycle High")
 
 //Generate vertical lines at the BTC Halving Dates
 isDate(y, m, d) =>
@@ -547,7 +551,7 @@ else
                         6450669335668
 
 bepPrice = if (input == "BTC")
-    57900
+    57963
 else
     if (input == "ETH")
         0
@@ -640,11 +644,3 @@ label.set_x(label10, 0)
 label.set_color(label10, color.new(color.red, showRisk))
 label.set_xloc(label10, time, xloc.bar_time)
 label.set_style(label10, label.style_label_left)
-
-var bepText = "" + tostring(bepPrice, "$ #.##")
-plot(bepPrice, title='Line', color=color.new(color.orange, 0), linewidth=2)
-var bepLabel = label.new(bar_index, bepPrice, text=bepText, textcolor=textColor)
-label.set_x(bepLabel, 0)
-label.set_color(bepLabel, color.new(color.orange, 20))
-label.set_xloc(bepLabel, time, xloc.bar_time)
-label.set_style(bepLabel, label.style_label_left)
