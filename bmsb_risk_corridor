@@ -249,20 +249,20 @@ src = security(syminfo.tickerid, resolution, close)
 
 //Plot the 4 MAs
 plot(is_show_lowma1?ma_long_low:na, color=color.new(color.red, transpTopBottem), linewidth=2, title="Low Long MA")
-var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.red, transpTopBottem), text = "BTC Low - Long SMA")
+var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.red, transpTopBottem), text = "BTC Low - Long SMA")
 label.set_xy(lowma_long_label, x = bar_index, y = ma_long_low)
 
 plot(is_show_lowma2?ema_short_low:na, color=color.new(color.green, transpTopBottem), linewidth=2, title="Low Short EMA")
-var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.green, transpTopBottem), text = "BTC Low - Short EMA")
+var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.green, transpTopBottem), text = "BTC Low - Short EMA")
 label.set_xy(lowema_short_label, x = bar_index, y = ema_short_low)
 
-plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem), linewidth=2, title="High Long MA")
-var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC High - Long MA")
+plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem), linewidth=2, title="Top Long MA")
+var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC Top - Long MA")
 label.set_xy(hima_long_label, x = bar_index, y = ma_long_hi)
 
-// plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="High Short MA")
-// var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC High - Short MA")
-// label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
+plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="Top Short MA")
+var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC Top - Short MA")
+label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
 
 //Find where the MAs cross each other
 PiCycleLow = crossunder(ema_short_low, ma_long_low) ? src + (src/100 * 10) : na
