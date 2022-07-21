@@ -107,36 +107,6 @@ ma3 = security(syminfo.tickerid, "W", ma(ma3Type, ma3Source, ma3Length), barmerg
 ma4 = security(syminfo.tickerid, "W", ma(ma4Type, ma4Source, ma4Length), barmerge.gaps_on, barmerge.lookahead_on)
 ma5 = security(syminfo.tickerid, "W", ma(ma5Type, ma5Source, ma5Length), barmerge.gaps_on, barmerge.lookahead_on)
 
-// pma1_1 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 1))
-// pma1_2 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 2))
-// pma1_3 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 3))
-// pma1_4 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 4))
-// pma1_5 = security(syminfo.tickerid, "W", ma_prediction(ma1Type, ma1Source, ma1Length, 5))
-
-// pma2_1 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 1))
-// pma2_2 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 2))
-// pma2_3 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 3))
-// pma2_4 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 4))
-// pma2_5 = security(syminfo.tickerid, "W", ma_prediction(ma2Type, ma2Source, ma2Length, 5))
-
-// pma3_1 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 1))
-// pma3_2 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 2))
-// pma3_3 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 3))
-// pma3_4 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 4))
-// pma3_5 = security(syminfo.tickerid, "W", ma_prediction(ma3Type, ma3Source, ma3Length, 5))
-
-// pma4_1 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 1))
-// pma4_2 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 2))
-// pma4_3 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 3))
-// pma4_4 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 4))
-// pma4_5 = security(syminfo.tickerid, "W", ma_prediction(ma4Type, ma4Source, ma4Length, 5))
-
-// pma5_1 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 1))
-// pma5_2 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 2))
-// pma5_3 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 3))
-// pma5_4 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 4))
-// pma5_5 = security(syminfo.tickerid, "W", ma_prediction(ma5Type, ma5Source, ma5Length, 5))
-
 plot(ma1Enabled ? ma1 : na, title="MA 1", color=color.new(color.orange, transp), linewidth=1)
 p4 = plot(ma4Enabled ? ma4 : na, title="MA 4", color=color.new(color.blue, transp100200), linewidth=2)
 p5 = plot(ma4Enabled ? ma5 : na, title="MA 5", color=color.new(color.yellow, transp100200), linewidth=2)
@@ -290,9 +260,9 @@ plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem),
 var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC High - Long MA")
 label.set_xy(hima_long_label, x = bar_index, y = ma_long_hi)
 
-plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="High Short MA")
-var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC High - Short MA")
-label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
+// plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="High Short MA")
+// var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC High - Short MA")
+// label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
 
 //Find where the MAs cross each other
 PiCycleLow = crossunder(ema_short_low, ma_long_low) ? src + (src/100 * 10) : na
