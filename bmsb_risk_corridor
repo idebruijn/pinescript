@@ -50,13 +50,10 @@ switchEMARibbon = input(title="On/Off EMA Ribbon", type=input.bool, defval=false
 transpEMARibbon = 100
 if (switchEMARibbon)
     transpEMARibbon := 0
-    
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // MA
-
 ma1Enabled = input(title="MA 1", type=input.bool, defval=true, group="Moving Average", inline="MA1")
 ma1Type = input("MA", title="", options = ["EMA", "MA"], group="Moving Average", inline="MA1")
 ma1Length = input(title="", type=input.integer, defval=8, minval=1, group="Moving Average", inline="MA1")
@@ -145,10 +142,12 @@ ma100d = security(syminfo.tickerid, "D", sma(close, 100), barmerge.gaps_on)
 ma200d = security(syminfo.tickerid, "D", sma(close, 200), barmerge.gaps_on)
 ma50 = security(syminfo.tickerid, "W", sma(close, 50), barmerge.gaps_on)
 ma300 = security(syminfo.tickerid, "W", sma(close, 300), barmerge.gaps_on)
+ma400 = security(syminfo.tickerid, "W", sma(close, 400), barmerge.gaps_on)
 plot( ma100d, color=color.new(color.gray, transpDailyLines), title="dailyMMA100", linewidth=1)
 plot( ma200d, color=color.new(color.gray, transpDailyLines), title="dailyMMA200", linewidth=1)
-plot( ma50, color=color.new(color.white, transp100200), title="weeklyMMA50", linewidth=1)
+plot( ma50, color=color.new(color.black, transp100200), title="weeklyMMA50", linewidth=1)
 plot( ma300, color=color.new(color.purple, transp100200), title="weeklyMMA300", linewidth=1)
+plot( ma400, color=color.new(color.white, transp100200), title="weeklyMMA400", linewidth=1)
 
 var label maLabel100d = na
 maLabel100d := label.new(x=bar_index, y=int(ma100d), yloc=yloc.price, style=label.style_label_left, color=color.new(color.gray, 100), text=tostring(ma100d, "$ # - 1OO sma (daily)"), textcolor=color.new(color.gray, transpDailyLines))
@@ -159,12 +158,16 @@ maLabel200d := label.new(x=bar_index, y=int(ma200d), yloc=yloc.price, style=labe
 label.delete(maLabel200d[1])
 
 var label maLabel50 = na
-maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.white, transp100200))
+maLabel50 := label.new(x=bar_index, y=int(ma50), yloc=yloc.price, style=label.style_label_left, color=color.new(color.black, 100), text=tostring(ma50, "$ # - 5Od sma"), textcolor=color.new(color.black, transp100200))
 label.delete(maLabel50[1])
 
 var label maLabel300 = na
 maLabel300 := label.new(x=bar_index, y=int(ma300), yloc=yloc.price, style=label.style_label_left, color=color.new(color.purple, 100), text=tostring(ma300, "$ # - 3OOd sma"), textcolor=color.new(color.purple, transp100200))
 label.delete(maLabel300[1])
+
+var label maLabel400 = na
+maLabel400 := label.new(x=bar_index, y=int(ma400), yloc=yloc.price, style=label.style_label_left, color=color.new(color.white, 100), text=tostring(ma400, "$ # - 4OOd sma"), textcolor=color.new(color.white, transp100200))
+label.delete(maLabel400[1])
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,17 +178,17 @@ label.delete(maLabel300[1])
 
 // Days X-Axis Value
 
-// start = time == timestamp(2010,7,18,0,0) // First BLX Bitcoin Date
-// days = security("BNC:BLX", "D", barssince(start))
-// c=sma(close, 20)
+start = time == timestamp(2010,7,18,0,0) // First BLX Bitcoin Date
+days = security("BNC:BLX", "D", barssince(start))
+c=sma(close, 20)
 
-// pi=3.1415926535
-// y1 = c*(16*pi*pi)/sqrt(days)
-// y2 = c/100*sqrt(days)
+pi=3.1415926535
+y1 = c*(16*pi*pi)/sqrt(days)
+y2 = c/100*sqrt(days)
 
-// plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
-// plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
-// fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
+plot1 = plot(y1, color=color.new(color.red, showCowenCorridor))
+plot2 = plot(y2, color=color.new(color.lime, showCowenCorridor))
+fill(plot1,plot2,color=color.new(color.blue, fillCowenCorridor))
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,27 +196,27 @@ label.delete(maLabel300[1])
 //@version=4
 //study(title="EMA Ribbon [Krypt]", shorttitle="EMA Ribbon", overlay=true)
 
-// dropn(src, n) =>
-//     na(src[n]) ? na : src
+dropn(src, n) =>
+    na(src[n]) ? na : src
 
-// length1 = input(20, title="MA-1 period", minval=1)
-// length2 = input(25, title="MA-2 period", minval=1)
-// length3 = input(30, title="MA-3 period", minval=1)
-// length4 = input(35, title="MA-4 period", minval=1)
-// length5 = input(40, title="MA-5 period", minval=1)
-// length6 = input(45, title="MA-6 period", minval=1)
-// length7 = input(50, title="MA-7 period", minval=1)
-// length8 = input(55, title="MA-8 period", minval=1)
-// dropCandles = input(1, minval=0, title="Drop first N candles")
+length1 = input(20, title="MA-1 period", minval=1)
+length2 = input(25, title="MA-2 period", minval=1)
+length3 = input(30, title="MA-3 period", minval=1)
+length4 = input(35, title="MA-4 period", minval=1)
+length5 = input(40, title="MA-5 period", minval=1)
+length6 = input(45, title="MA-6 period", minval=1)
+length7 = input(50, title="MA-7 period", minval=1)
+length8 = input(55, title="MA-8 period", minval=1)
+dropCandles = input(1, minval=0, title="Drop first N candles")
 
-// plot(ema(dropn(close, dropCandles), length1), title="MA-1", color=color.rgb(245, 235, 93, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length2), title="MA-2", color=color.rgb(245, 183, 113, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length3), title="MA-3", color=color.rgb(245, 176, 86, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length4), title="MA-4", color=color.rgb(245, 123, 78, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length5), title="MA-5", color=color.rgb(245, 109, 88, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length6), title="MA-6", color=color.rgb(245, 125, 81, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245, 81, 81, transp=transpEMARibbon), linewidth=1)
-// plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length1), title="MA-1", color=color.rgb(245, 235, 93, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length2), title="MA-2", color=color.rgb(245, 183, 113, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length3), title="MA-3", color=color.rgb(245, 176, 86, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length4), title="MA-4", color=color.rgb(245, 123, 78, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length5), title="MA-5", color=color.rgb(245, 109, 88, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length6), title="MA-6", color=color.rgb(245, 125, 81, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length7), title="MA-7", color=color.rgb(245, 81, 81, transp=transpEMARibbon), linewidth=1)
+plot(ema(dropn(close, dropCandles), length8), title="MA-8", color=color.rgb(170, 39, 7, transp=transpEMARibbon), linewidth=1)
 
 
 // This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
@@ -249,19 +252,19 @@ src = security(syminfo.tickerid, resolution, close)
 
 //Plot the 4 MAs
 plot(is_show_lowma1?ma_long_low:na, color=color.new(color.red, transpTopBottem), linewidth=2, title="Low Long MA")
-var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.red, transpTopBottem), text = "BTC Low - Long SMA")
+var lowma_long_label = label.new(x = bar_index, y = lowma_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.red, transpTopBottem), text = "BTC Low - Long SMA")
 label.set_xy(lowma_long_label, x = bar_index, y = ma_long_low)
 
 plot(is_show_lowma2?ema_short_low:na, color=color.new(color.green, transpTopBottem), linewidth=2, title="Low Short EMA")
-var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.green, transpTopBottem), text = "BTC Low - Short EMA")
+var lowema_short_label = label.new(x = bar_index, y = lowema_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.green, transpTopBottem), text = "BTC Low - Short EMA")
 label.set_xy(lowema_short_label, x = bar_index, y = ema_short_low)
 
-plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem), linewidth=2, title="Top Long MA")
-var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC Top - Long MA")
+plot(is_show_hima1?ma_long_hi:na, color=color.new(color.white, transpTopBottem), linewidth=2, title="High Long MA")
+var hima_long_label = label.new(x = bar_index, y = hima_long, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.white, transpTopBottem), text = "BTC High - Long MA")
 label.set_xy(hima_long_label, x = bar_index, y = ma_long_hi)
 
-plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="Top Short MA")
-var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.new(color.black, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC Top - Short MA")
+plot(is_show_hima2?ma_short_hi:na, color=color.new(color.yellow, transpTopBottem), linewidth=2, title="High Short MA")
+var hima_short_label = label.new(x = bar_index, y = hima_short, color = color.rgb(0, 0, 0, transpTopBottem), style = label.style_label_left, textcolor = color.new(color.yellow, transpTopBottem), text = "BTC High - Short MA")
 label.set_xy(hima_short_label, x = bar_index, y = ma_short_hi)
 
 //Find where the MAs cross each other
@@ -276,6 +279,7 @@ var ppch = plot(PiCycleHi, color=color.new(color.white, transpTopBottem), linewi
 plotshape(PiCycleLow, text="Pi Cycle Low", color=color.new(color.navy, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labelup, size=size.normal, location=location.belowbar, title="Cycle Low")
 plotshape(PiCycleHi, text="Pi Cycle High", color=color.new(color.teal, transpTopBottem), textcolor=color.new(color.white, transpTopBottem), style=shape.labeldown, size=size.normal, location=location.abovebar, title="Cycle High")
 
+
 //Generate vertical lines at the BTC Halving Dates
 isDate(y, m, d) =>
     val = timestamp(y,m,d)
@@ -286,23 +290,23 @@ isDate(y, m, d) =>
 
 // First Halving
 if isDate(2012, 11, 28)
-    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow, width=1)
     label.new(bar_index, low, text="1st Halving - Nov 28, 2012", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)
     
 // Second Halving
 if isDate(2016, 7, 9)
-    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow, width=1)
     label.new(bar_index, low, text="2nd Halving - Jul 9, 2016", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)
     
 // Third Halving
 if isDate(2020, 5, 11)
-    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow, width=1)
     label.new(bar_index, low, text="3rd Halving - May 11, 2020", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
          
-// // Fourth Halving
-// if isDate(2024, 4, 2)
-//     line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow)
-//     label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
+// Fourth Halving
+if isDate(2024, 4, 19)
+    line.new(bar_index, low, bar_index, high, xloc.bar_index, extend.both, style=line.style_dashed, color=color.yellow, width=1)
+    label.new(bar_index, low, text="4th Halving - April 2, 2024", style=label.style_label_upper_left, textcolor=color.yellow, color=color.black, textalign=text.align_right, yloc=yloc.belowbar)    
 
 
 //@version = 4
@@ -325,292 +329,3 @@ barcolor(puellMultiple < bottom ? color.new(color.white, 0) : puellMultiple > to
 
 alertcondition(puellMultiple > top1, title="BTC Puell Multiple Top", message="BTC Puell Multiple Top Alert! - {{exchange}} : {{ticker}} Be careful, it's time to consider sell! \nCurrent price：{{close}} \nTriggered Time：{{timenow}}")
 alertcondition(puellMultiple < bottom, title="BTC Puell Multiple Bottom", message="BTC Puell Multiple Bottom Alert! - {{exchange}} : {{ticker}} Congratulation! It's a good opportunity to accumulate more coins! \nCurrent price：{{close}} \nTriggered Time：{{timenow}}")
-
-
-// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
-//@version=4
-//study("DIY: Ben's Risk", overlay=true)
-
-// Amateur switch show Ben's Risk
-switchShowRisk = input(title="On/Off Ben's Risk", type=input.bool, defval=true)
-showRisk = 100
-textColor = color.new(color.white, 35)
-if (switchShowRisk)
-    showRisk := 0
-    textColor := color.new(color.black, 0)
-
-input = input(title="Ticker", defval="BTC", options=["BTC", "ETH", "ADA", "DOT", "LINK", "TMC"])
-price01 = if (input == "BTC")
-    15000
-else
-    if (input == "ETH")
-        501
-    else
-        if (input == "ADA")
-            0.280854397910643
-        else
-            if (input == "DOT")
-                9.51242547890529
-            else
-                if (input == "LINK")
-                    7.47867557715674
-                else
-                    if (input == "TMC")
-                        710598565832
-
-price02 = if (input == "BTC")
-    17313
-else
-    if (input == "ETH")
-        704
-    else
-        if (input == "ADA")
-            0.684398710637243
-        else
-            if (input == "DOT")
-                11.7453990849009
-            else
-                if (input == "LINK")
-                    9.52116635611781
-                else
-                    if (input == "TMC")
-                        948149957259
-
-price03 = if (input == "BTC")
-    22412
-else
-    if (input == "ETH")
-        989
-    else
-        if (input == "ADA")
-            1.54705799681439
-        else
-            if (input == "DOT")
-                16.7611766982775
-            else
-                if (input == "LINK")
-                    14.1095054192102
-                else
-                    if (input == "TMC")
-                        948149957259
-
-price04 = if (input == "BTC")
-    30573
-else
-    if (input == "ETH")
-        1391
-    else
-        if (input == "ADA")
-            2.98052948832112
-        else
-            if (input == "DOT")
-                25.0805403733113
-            else
-                if (input == "LINK")
-                    21.745204721505
-                else
-                    if (input == "TMC")
-                        1329470848742
-
-price05 = if (input == "BTC")
-    41685
-else
-    if (input == "ETH")
-        1954
-    else
-        if (input == "ADA")
-            5.08474828716115
-        else
-            if (input == "DOT")
-                37.2341491341062
-            else
-                if (input == "LINK")
-                    32.8908150064683
-                else
-                    if (input == "TMC")
-                        1848231492361
-
-price06 = if (input == "BTC")
-    55677
-else
-    if (input == "ETH")
-        2747
-    else
-        if (input == "ADA")
-            7.95218525766471
-        else
-            if (input == "DOT")
-                53.6998127340824
-            else
-                if (input == "LINK")
-                    47.9986315429353
-                else
-                    if (input == "TMC")
-                        2502322863403
-
-price07 = if (input == "BTC")
-    72493
-else
-    if (input == "ETH")
-        3861
-    else
-        if (input == "ADA")
-            11.6813127090301
-        else
-            if (input == "DOT")
-                74.9377219985792
-            else
-                if (input == "LINK")
-                    67.4950884086444
-                else
-                    if (input == "TMC")
-                        3290792600135
-
-price08 = if (input == "BTC")
-    92090
-else
-    if (input == "ETH")
-        5426
-    else
-        if (input == "ADA")
-            16.3757651208632
-        else
-            if (input == "DOT")
-                101.399122807018
-            else
-                if (input == "LINK")
-                    91.7935190144617
-                else
-                    if (input == "TMC")
-                        4211977771162
-
-price09 = if (input == "BTC")
-    114435
-else
-    if (input == "ETH")
-        7625
-    else
-        if (input == "ADA")
-            22.148037216416
-        else
-            if (input == "DOT")
-                133.53143659993
-            else
-                if (input == "LINK")
-                    121.316639741519
-                else
-                    if (input == "TMC")
-                        5265381606883
-
-price10 = if (input == "BTC")
-    132976
-else
-    if (input == "ETH")
-        9843
-    else
-        if (input == "ADA")
-            27.2619638167493
-        else
-            if (input == "DOT")
-                161.628036638789
-            else
-                if (input == "LINK")
-                    173.592183517417
-                else
-                    if (input == "TMC")
-                        6450669335668
-
-bepPrice = if (input == "BTC")
-    57963
-else
-    if (input == "ETH")
-        0
-    else
-        if (input == "ADA")
-            0
-        else
-            if (input == "DOT")
-                0
-            else
-                if (input == "LINK")
-                    0
-
-var labelText01 = "0.0"  + tostring(price01, " - $ #.##")
-plot(price01, title='Line', color=color.new(color.green, showRisk), linewidth=1)
-var label01 = label.new(bar_index, price01, text=labelText01, textcolor=textColor)
-label.set_x(label01, 0)
-label.set_color(label01, color.new(color.green, showRisk))
-label.set_xloc(label01, time, xloc.bar_time)
-label.set_style(label01, label.style_label_left)
-
-var labelText02 = "0.1"  + tostring(price02, " - $ #.##")
-plot(price02, title='Line', color=color.new(color.green, showRisk), linewidth=1)
-var label02 = label.new(bar_index, price02, text=labelText02, textcolor=textColor)
-label.set_x(label02, 0)
-label.set_color(label02, color.new(color.green, showRisk))
-label.set_xloc(label02, time, xloc.bar_time)
-label.set_style(label02, label.style_label_left)
-
-var labelText03 = "0.2"  + tostring(price03, " - $ #.##")
-plot(price03, title='Line', color=color.new(color.green, showRisk), linewidth=1)
-var label03 = label.new(bar_index, price03, text=labelText03, textcolor=textColor)
-label.set_x(label03, 0)
-label.set_color(label03, color.new(color.green, showRisk))
-label.set_xloc(label03, time, xloc.bar_time)
-label.set_style(label03, label.style_label_left)
-
-var labelText04 = "0.3"  + tostring(price04, " - $ #.##")
-plot(price04, title='Line', color=color.new(color.green, showRisk), linewidth=1)
-var label04 = label.new(bar_index, price04, text=labelText04, textcolor=textColor)
-label.set_x(label04, 0)
-label.set_color(label04, color.new(color.green, showRisk))
-label.set_xloc(label04, time, xloc.bar_time)
-label.set_style(label04, label.style_label_left)
-
-var labelText05 = "0.4"  + tostring(price05, " - $ #.##")
-plot(price05, title='Line', color=color.new(color.green, showRisk), linewidth=1)
-var label05 = label.new(bar_index, price05, text=labelText05, textcolor=textColor)
-label.set_x(label05, 0)
-label.set_color(label05, color.new(color.green, showRisk))
-label.set_xloc(label05, time, xloc.bar_time)
-label.set_style(label05, label.style_label_left)
-
-var labelText06 = "0.5"  + tostring(price06, " - $ #.##")
-plot(price06, title='Line', color=color.new(color.orange, showRisk), linewidth=1)
-var label06 = label.new(bar_index, price06, text=labelText06, textcolor=textColor)
-label.set_x(label06, 0)
-label.set_color(label06, color.new(color.orange, showRisk))
-label.set_xloc(label06, time, xloc.bar_time)
-label.set_style(label06, label.style_label_left)
-
-var labelText07 = "0.6"  + tostring(price07, " - $ #.##")
-plot(price07, title='Line', color=color.new(color.orange, showRisk), linewidth=1)
-var label07 = label.new(bar_index, price07, text=labelText07, textcolor=textColor)
-label.set_x(label07, 0)
-label.set_color(label07, color.new(color.orange, showRisk))
-label.set_xloc(label07, time, xloc.bar_time)
-label.set_style(label07, label.style_label_left)
-
-var labelText08 = "0.7"  + tostring(price08, " - $ #.##")
-plot(price08, title='Line', color=color.new(color.red, showRisk), linewidth=1)
-var label08 = label.new(bar_index, price08, text=labelText08, textcolor=textColor)
-label.set_x(label08, 0)
-label.set_color(label08, color.new(color.red, showRisk))
-label.set_xloc(label08, time, xloc.bar_time)
-label.set_style(label08, label.style_label_left)
-
-var labelText09 = "0.8"  + tostring(price09, " - $ #.##")
-plot(price09, title='Line', color=color.new(color.red, showRisk), linewidth=1)
-var label09 = label.new(bar_index, price09, text=labelText09, textcolor=textColor)
-label.set_x(label09, 0)
-label.set_color(label09, color.new(color.red, showRisk))
-label.set_xloc(label09, time, xloc.bar_time)
-label.set_style(label09, label.style_label_left)
-
-var labelText10 = "1.0" + tostring(price10, " - $ #.##")
-plot(price10, title='Line', color=color.new(color.red, showRisk), linewidth=1)
-var label10 = label.new(bar_index, price10, text=labelText10, textcolor=textColor)
-label.set_x(label10, 0)
-label.set_color(label10, color.new(color.red, showRisk))
-label.set_xloc(label10, time, xloc.bar_time)
-label.set_style(label10, label.style_label_left)
